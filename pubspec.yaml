@@ -1,0 +1,30 @@
+name: farmwork_base
+description: "A new Flutter project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.10.4
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core_framework:
+    path: lib/packages/utils_framework
+  handler_framework:
+    path: lib/packages/handler_framework
+  utils_framework:
+    path: lib/packages/utils_framework
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
