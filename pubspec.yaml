@@ -23,6 +23,9 @@ dependencies:
   persian_datetime_picker: ^3.1.1
   flutter_riverpod: ^2.4.0
   curl_generator: ^1.0.2
+  google_api_availability: ^5.0.1
+  device_info_plus: ^11.5.0
+  universal_html: ^2.2.4
 
 dev_dependencies:
   flutter_test:
