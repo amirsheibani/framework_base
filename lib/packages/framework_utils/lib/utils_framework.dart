@@ -7,6 +7,7 @@ export 'src/extensions/jalali_extension.dart';
 export 'src/extensions/search_debounce_extension.dart';
 export 'src/extensions/date_time_extension.dart';
 export 'src/interceptor/custom_pretty_logger.dart';
+export 'src/device_info.dart';
 
 
 
