@@ -1,11 +1,11 @@
 name: framework_base
-description: "A new Flutter project."
+description: "A base Flutter package for building production apps with clean architecture, shared services, theme management, and utility extensions."
 version: 0.0.1
-homepage:
+homepage: https://your-internal-git/framework_base
 
 environment:
   sdk: ^3.10.4
-  flutter: ">=1.17.0"
+  flutter: ">=3.19.0"
 
 dependencies:
   flutter:
@@ -31,6 +31,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  mocktail: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

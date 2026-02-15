@@ -19,7 +19,8 @@ abstract class AuthServiceModule {
 class AuthService {
   final SupabaseClient _supabase;
 
-  AuthService() : _supabase = Supabase.instance.client {
+  AuthService({SupabaseClient? supabaseClient})
+      : _supabase = supabaseClient ?? Supabase.instance.client {
     // Initialize Supabase if not already initialized
     // This should be done in bootstrap.dart
   }
@@ -139,11 +140,11 @@ class AuthService {
 
   /// ورود با Google
   /// Sign in with Google
-  Future<bool> signInWithGoogle() async {
+  Future<bool> signInWithGoogle({String? redirectTo}) async {
     try {
       await _supabase.auth.signInWithOAuth(
         OAuthProvider.google,
-        redirectTo: 'io.supabase.flutterquickstart://login-callback/',
+        redirectTo: redirectTo,
       );
       return true;
     } catch (e) {
@@ -157,11 +158,11 @@ class AuthService {
 
   /// ورود با Facebook
   /// Sign in with Facebook
-  Future<bool> signInWithFacebook() async {
+  Future<bool> signInWithFacebook({String? redirectTo}) async {
     try {
       await _supabase.auth.signInWithOAuth(
         OAuthProvider.facebook,
-        redirectTo: 'io.supabase.flutterquickstart://login-callback/',
+        redirectTo: redirectTo,
       );
       return true;
     } catch (e) {

@@ -397,7 +397,9 @@ class GPSLocationInfo {
 }
 
 class GPSService {
-  final GeolocatorPlatform _geolocator = GeolocatorPlatform.instance;
+  final GeolocatorPlatform _geolocator;
+  final Permission _locationPermission;
+  final Future<bool> Function() _openAppSettings;
   StreamSubscription<Position>? _positionStreamSubscription;
   final _positionController = StreamController<Position>.broadcast();
 
@@ -411,7 +413,13 @@ class GPSService {
   /// Last known position
   Position? get lastKnownPosition => _lastKnownPosition;
 
-  GPSService() {
+  GPSService({
+    GeolocatorPlatform? geolocator,
+    Permission? locationPermission,
+    Future<bool> Function()? openAppSettingsFn,
+  })  : _geolocator = geolocator ?? GeolocatorPlatform.instance,
+        _locationPermission = locationPermission ?? Permission.location,
+        _openAppSettings = openAppSettingsFn ?? openAppSettings {
     checkPermissionStatus();
   }
 
@@ -419,7 +427,7 @@ class GPSService {
   /// Check permission status
   Future<GPSPermissionStatus> checkPermissionStatus() async {
     try {
-      final status = await Permission.location.status;
+      final status = await _locationPermission.status;
 
       GPSPermissionStatus gpsStatus;
       if (status.isGranted) {
@@ -492,7 +500,7 @@ class GPSService {
   /// باز کردن تنظیمات برای فعال کردن GPS
   /// Open settings to enable GPS
   Future<bool> openLocationSettings() async {
-    return await openAppSettings();
+    return await _openAppSettings();
   }
 
   /// گرفتن موقعیت فعلی (یک بار)

@@ -21,7 +21,8 @@ abstract class InternetServiceModule {
 }
 
 class InternetService {
-  final Connectivity _connectivity = Connectivity();
+  final Connectivity _connectivity;
+  final InternetConnectionChecker _internetChecker;
   late StreamSubscription _subscription;
 
   final _controller = StreamController<(bool,ConnectivityResult)>.broadcast();
@@ -38,18 +39,29 @@ class InternetService {
   Stream<(bool,ConnectivityResult)> get internetStatus => _controller.stream;
 
 
-  InternetService(){
+  InternetService({
+    Connectivity? connectivity,
+    InternetConnectionChecker? internetChecker,
+  })  : _connectivity = connectivity ?? Connectivity(),
+        _internetChecker = internetChecker ?? InternetConnectionChecker() {
     // گوش دادن به تغییرات وضعیت اتصال
     // Listening to connection status changes
     _subscription = _connectivity.onConnectivityChanged.listen((result) async {
-      // چک کردن اینکه آیا واقعاً به اینترنت دسترسی دارد
-      // Checking if there is actual internet access
-      InternetConnectionChecker().hasConnection.then((value){
-        // ارسال وضعیت به stream
-        // Sending status to stream
-        _controller.add((value,result.last));
-      });
+      await _handleConnectivityChange(result);
     });
+  }
+
+  Future<void> _handleConnectivityChange(List<ConnectivityResult> result) async {
+    // چک کردن اینکه آیا واقعاً به اینترنت دسترسی دارد
+    // Checking if there is actual internet access
+    final bool hasConnection = await _internetChecker.hasConnection;
+    final ConnectivityResult connectivityResult;
+
+    connectivityResult = result.isNotEmpty ? result.last : ConnectivityResult.none;
+
+    // ارسال وضعیت به stream
+    // Sending status to stream
+    _controller.add((hasConnection, connectivityResult));
   }
 
   /// آزاد کردن منابع

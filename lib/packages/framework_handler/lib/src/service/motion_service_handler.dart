@@ -206,7 +206,14 @@ class MotionService {
   /// Whether currently listening
   bool get isListening => _isListening;
 
-  MotionService() {
+  final Stream<AccelerometerEvent> _accelerometerStream;
+  final Stream<GyroscopeEvent> _gyroscopeStream;
+
+  MotionService({
+    Stream<AccelerometerEvent>? accelerometerStream,
+    Stream<GyroscopeEvent>? gyroscopeStream,
+  })  : _accelerometerStream = accelerometerStream ?? accelerometerEventStream(),
+        _gyroscopeStream = gyroscopeStream ?? gyroscopeEventStream() {
     _start();
   }
 
@@ -216,7 +223,7 @@ class MotionService {
     if (_isListening) return;
 
     // گوش دادن به شتاب‌سنج / Listening to accelerometer
-    _accelerometerSub = accelerometerEventStream().listen(
+    _accelerometerSub = _accelerometerStream.listen(
       (event) {
         _lastAccelerometer = event;
         _processSensors();
@@ -231,7 +238,7 @@ class MotionService {
 
     // گوش دادن به ژیروسکوپ برای تشخیص بهتر حرکت
     // Listening to gyroscope for better motion detection
-    _gyroscopeSub = gyroscopeEventStream().listen(
+    _gyroscopeSub = _gyroscopeStream.listen(
       (event) {
         _lastGyroscope = event;
         _processSensors(); // پردازش با هر تغییر gyroscope هم

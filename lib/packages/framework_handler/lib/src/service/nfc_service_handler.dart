@@ -10,26 +10,34 @@ abstract class NFCServiceModule {
 }
 
 class NFCService {
-  NfcManager nfcManager = NfcManager.instance;
-
-  late StreamSubscription _subscription;
+  final NfcManager nfcManager;
   final _controller = StreamController<(NfcAvailability,NfcTag)>.broadcast();
 
-  Stream<(NfcAvailability,NfcTag)> get internetStatus => _controller.stream;
+  Stream<(NfcAvailability,NfcTag)> get nfcStatus => _controller.stream;
 
-  NFCService() {
-    nfcManager.checkAvailability().then((value){
-      nfcManager.startSession(onDiscovered: (tag) {
-        _controller.add((value,tag));
+  NFCService({NfcManager? nfcManager}) : nfcManager = nfcManager ?? NfcManager.instance;
+
+  Future<void> startSession({Set<NfcPollingOption>? pollingOptions}) async {
+    final availability = await nfcManager.checkAvailability();
+    await nfcManager.startSession(
+      onDiscovered: (tag) {
+        _controller.add((availability, tag));
         nfcManager.stopSession();
-      }, pollingOptions: {NfcPollingOption.iso14443, NfcPollingOption.iso15693, NfcPollingOption.iso18092});
+      },
+      pollingOptions: pollingOptions ??
+          {
+            NfcPollingOption.iso14443,
+            NfcPollingOption.iso15693,
+            NfcPollingOption.iso18092,
+          },
+    );
+  }
 
-    });
-
+  Future<void> stopSession() async {
+    await nfcManager.stopSession();
   }
 
   void dispose() {
-    _subscription.cancel();
     _controller.close();
   }
 }
