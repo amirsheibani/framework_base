@@ -275,6 +275,37 @@ extension StringExtension on String? {
     return '${value[0]}${value[1]}/${value.substring(2)}';
   }
 
+  String get mobileNumberWithPattern {
+    final value = this;
+    if (value == null) return 'this number is not support';
+    if (value.length == 11) {
+      final value0 = value.characters.toList();
+      final partOne = value0.take(4).join();
+      value0.removeRange(0, 4);
+      final partTwo = value0.take(3).join();
+      value0.removeRange(0, 3);
+      final partThree = value0.join();
+      return '$partOne $partTwo $partThree';
+    }
+
+    return 'this number is not support';
+  }
+
+  String get nationalCodeWithDashPattern {
+    final value = this;
+    if (value == null) return 'this code is not support';
+    if (value.length == 10) {
+      final value0 = value.characters.toList();
+      final partOne = value0.take(3).join();
+      value0.removeRange(0, 3);
+      final partTwo = value0.take(6).join();
+      value0.removeRange(0, 6);
+      final partThree = value0.join();
+      return '$partOne-$partTwo-$partThree';
+    }
+    return 'this code is not support';
+  }
+
   String? get removeExtraZeroFromDecimal {
     if (this == null) return null;
 
