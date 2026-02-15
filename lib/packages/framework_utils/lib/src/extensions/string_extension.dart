@@ -276,11 +276,11 @@ extension StringExtension on String? {
   }
 
   String? get removeExtraZeroFromDecimal {
-    if (this == null) {
-      return null;
-    }
-    final RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
-    return this!.replaceAll(regex, '');
+    if (this == null) return null;
+
+    return this!
+        .replaceAll(RegExp(r'0+$'), '')   // حذف صفرهای انتهایی
+        .replaceAll(RegExp(r'\.$'), '');  // حذف نقطه اگر تنها ماند
   }
 
   String? get removeThousandSeperator {

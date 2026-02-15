@@ -64,13 +64,18 @@ class Pagination {
   Map<String, Object?> toQueryParameters() {
     return {
       if (page != null) 'page': page,
-      if (pageSize != null) 'page_size': pageSize,
-      if (size != null) 'size': pageSize,
+
+      if (pageSize != null) ...{
+        'page_size': pageSize,
+        'size': pageSize,
+      },
+
       if (search != null) 'search': search,
       if (minPrice != null) 'min_price': minPrice,
       if (maxPrice != null) 'max_price': maxPrice,
       if (stockStatus != null) 'stock_status': stockStatus,
-      if (allVariationsHaveDiscount != null) 'all_variations_have_discount': allVariationsHaveDiscount,
+      if (allVariationsHaveDiscount != null)
+        'all_variations_have_discount': allVariationsHaveDiscount,
       if (hasPrice != null) 'has_price': hasPrice,
     };
   }
