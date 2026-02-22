@@ -15,6 +15,7 @@ import 'package:skeleton/features/main_layout/presentation/features/my_ip/presen
 import 'package:skeleton/features/main_layout/presentation/features/profile/presentation/pages/profile_page.dart';
 import 'package:skeleton/features/main_layout/presentation/pages/main_layout.dart';
 import 'package:skeleton/features/splash/presentation/pages/splash_page.dart';
+import 'package:chucker_flutter/chucker_flutter.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -56,6 +57,9 @@ enum AppRouterPath{
 }
 
 final appRouter = GoRouter(
+  observers: [
+    ChuckerFlutter.navigatorObserver,
+  ],
   initialLocation: AppRouterPath.splash.path,
   refreshListenable: GoRouterRefreshStream(AppLinks().uriLinkStream),
   redirect: (context,state){

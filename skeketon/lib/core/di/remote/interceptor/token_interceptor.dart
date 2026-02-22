@@ -9,11 +9,12 @@ class TokenInterceptor extends Interceptor {
 
     final deviceInfo = getIt<DeviceInfo>();
 
-    options.headers['X-Device-Name'] = '${deviceInfo.deviceName}';
-    options.headers['X-Device-Brand'] = '${deviceInfo.brand}';
-    options.headers['X-Version'] = '${deviceInfo.version?.split('-').first}';
-    options.headers['X-Platform'] = '${deviceInfo.platformName?.value?.toUpperCase()}';
 
+    // options.headers['X-Device-Name'] = '${deviceInfo.deviceName}';
+    // options.headers['X-Device-Brand'] = '${deviceInfo.brand}';
+    // options.headers['X-Version'] = '${deviceInfo.version?.split('-').first}';
+    // options.headers['X-Platform'] = '${deviceInfo.platformName?.value?.toUpperCase()}';
+    //
 
     options.path = options.path;
 

@@ -10,8 +10,8 @@ import 'package:framework_base/packages/framework_handler/lib/src/service/car_sl
     as _i1056;
 import 'package:framework_base/packages/framework_handler/lib/src/service/gps_service_handler.dart'
     as _i373;
-import 'package:framework_base/packages/framework_handler/lib/src/service/internet_service_handler.dart'
-    as _i23;
+import 'package:framework_base/packages/framework_handler/lib/src/service/internet_service/internet_service.dart'
+    as _i853;
 import 'package:framework_base/packages/framework_handler/lib/src/service/motion_service_handler.dart'
     as _i890;
 import 'package:framework_base/packages/framework_handler/lib/src/service/nfc_service_handler.dart'
@@ -36,7 +36,7 @@ class FrameworkBasePackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i631.DeviceInfo>(() => deviceModule.provideDeviceInfo());
     gh.lazySingleton<_i373.GPSService>(
         () => gPSServiceModule.provideGPSService());
-    gh.lazySingleton<_i23.InternetService>(
+    gh.lazySingleton<_i853.InternetService>(
         () => internetServiceModule.provideInternetService());
     gh.lazySingleton<_i890.MotionService>(
         () => motionServiceModule.provideMotionService());
@@ -56,7 +56,7 @@ class _$DeviceModule extends _i631.DeviceModule {}
 
 class _$GPSServiceModule extends _i373.GPSServiceModule {}
 
-class _$InternetServiceModule extends _i23.InternetServiceModule {}
+class _$InternetServiceModule extends _i853.InternetServiceModule {}
 
 class _$MotionServiceModule extends _i890.MotionServiceModule {}
 

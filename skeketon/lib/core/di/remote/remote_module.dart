@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
@@ -37,16 +38,23 @@ abstract class RemoteModule {
   _getDio() {
     var dio = Dio(BaseOptions(baseUrl: environment.url!));
 
-    final securityContext = SecurityContext.defaultContext;
-    if(sslCert.isNotEmpty){
-      securityContext.setTrustedCertificatesBytes(sslCert.codeUnits);
+    if (!kIsWeb) {
+      final securityContext = SecurityContext.defaultContext;
+
+      if (sslCert.isNotEmpty) {
+        securityContext.setTrustedCertificatesBytes(
+          sslCert.codeUnits,
+        );
+      }
+
+      (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient =
+          () {
+        HttpClient httpClient =
+        HttpClient(context: securityContext);
+        return httpClient;
+      };
     }
 
-
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      HttpClient httpClient = HttpClient(context: securityContext);
-      return httpClient;
-    };
 
     dio.interceptors.add(_tokenInterceptor);
 
@@ -57,28 +65,28 @@ abstract class RemoteModule {
       dio.interceptors.add(_chuckerDioInterceptor);
     }
 
-    late Duration connectTimeout;
-    late Duration receiveTimeout;
-    late Duration sendTimeout;
-
     switch(environment){
       case DevEnvironment():
-        connectTimeout = const Duration(seconds: 60);
-        receiveTimeout = const Duration(seconds: 60);
-        sendTimeout = const Duration(seconds: 60);
+        dio.options.connectTimeout = const Duration(seconds: 60);
+        dio.options.receiveTimeout = const Duration(seconds: 60);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 60);
+        }
       case StageEnvironment():
-        connectTimeout = const Duration(seconds: 20);
-        receiveTimeout = const Duration(seconds: 20);
-        sendTimeout = const Duration(seconds: 20);
+        dio.options.connectTimeout = const Duration(seconds: 20);
+        dio.options.receiveTimeout = const Duration(seconds: 20);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 20);
+        }
       case ProdEnvironment():
-        connectTimeout = const Duration(seconds: 20);
-        receiveTimeout = const Duration(seconds: 20);
-        sendTimeout = const Duration(seconds: 20);
+        dio.options.connectTimeout = const Duration(seconds: 20);
+        dio.options.receiveTimeout = const Duration(seconds: 20);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 20);
+        }
     }
 
-    dio.options.connectTimeout = connectTimeout;
-    dio.options.receiveTimeout = receiveTimeout;
-    dio.options.sendTimeout = sendTimeout;
+
 
     return dio;
   }
@@ -104,22 +112,24 @@ abstract class RemoteModule {
 
     switch(environment){
       case DevEnvironment():
-        connectTimeout = const Duration(seconds: 60);
-        receiveTimeout = const Duration(seconds: 60);
-        sendTimeout = const Duration(seconds: 60);
+        dio.options.connectTimeout = const Duration(seconds: 60);
+        dio.options.receiveTimeout = const Duration(seconds: 60);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 60);
+        }
       case StageEnvironment():
-        connectTimeout = const Duration(seconds: 20);
-        receiveTimeout = const Duration(seconds: 20);
-        sendTimeout = const Duration(seconds: 20);
+        dio.options.connectTimeout = const Duration(seconds: 20);
+        dio.options.receiveTimeout = const Duration(seconds: 20);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 20);
+        }
       case ProdEnvironment():
-        connectTimeout = const Duration(seconds: 20);
-        receiveTimeout = const Duration(seconds: 20);
-        sendTimeout = const Duration(seconds: 20);
+        dio.options.connectTimeout = const Duration(seconds: 20);
+        dio.options.receiveTimeout = const Duration(seconds: 20);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 20);
+        }
     }
-
-    dio.options.connectTimeout = connectTimeout;
-    dio.options.receiveTimeout = receiveTimeout;
-    dio.options.sendTimeout = sendTimeout;
 
     return dio;
   }
@@ -145,22 +155,24 @@ abstract class RemoteModule {
 
     switch(environment){
       case DevEnvironment():
-        connectTimeout = const Duration(seconds: 60);
-        receiveTimeout = const Duration(seconds: 60);
-        sendTimeout = const Duration(seconds: 60);
+        dio.options.connectTimeout = const Duration(seconds: 60);
+        dio.options.receiveTimeout = const Duration(seconds: 60);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 60);
+        }
       case StageEnvironment():
-        connectTimeout = const Duration(seconds: 20);
-        receiveTimeout = const Duration(seconds: 20);
-        sendTimeout = const Duration(seconds: 20);
+        dio.options.connectTimeout = const Duration(seconds: 20);
+        dio.options.receiveTimeout = const Duration(seconds: 20);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 20);
+        }
       case ProdEnvironment():
-        connectTimeout = const Duration(seconds: 20);
-        receiveTimeout = const Duration(seconds: 20);
-        sendTimeout = const Duration(seconds: 20);
+        dio.options.connectTimeout = const Duration(seconds: 20);
+        dio.options.receiveTimeout = const Duration(seconds: 20);
+        if(!kIsWeb){
+          dio.options.sendTimeout = const Duration(seconds: 20);
+        }
     }
-
-    dio.options.connectTimeout = connectTimeout;
-    dio.options.receiveTimeout = receiveTimeout;
-    dio.options.sendTimeout = sendTimeout;
 
     return dio;
   }

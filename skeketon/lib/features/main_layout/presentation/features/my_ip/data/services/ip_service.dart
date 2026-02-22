@@ -11,7 +11,7 @@ abstract class IpService {
   factory IpService(Dio dio,) = _IpService;
 
   @GET('/')
-  Future<HttpResponse<String>> getIp();
+  Future<HttpResponse<String>> getIp({@Query('format') String format = 'json'});
 
 }
 

@@ -40,6 +40,7 @@ dependencies:
   #  app_links: ^7.0.0
   sensors_plus: ^5.0.0
   supabase_flutter: ^2.12.0
+  sentry_flutter: ^8.13.2
 #  dart_mapper_clean: ^0.2.4
 
 

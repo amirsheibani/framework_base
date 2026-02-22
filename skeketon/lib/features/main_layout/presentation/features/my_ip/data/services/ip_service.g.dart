@@ -20,9 +20,9 @@ class _IpService implements IpService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<String>> getIp() async {
+  Future<HttpResponse<String>> getIp({String format = 'json'}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'format': format};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<HttpResponse<String>>(

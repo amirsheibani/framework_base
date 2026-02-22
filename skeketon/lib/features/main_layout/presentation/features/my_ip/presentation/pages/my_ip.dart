@@ -19,7 +19,6 @@ class _MyIpPageState extends ConsumerState<MyIpPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final myIpState = ref.watch(myIpProvider);
     final theme = Theme.of(context);
 
@@ -28,28 +27,36 @@ class _MyIpPageState extends ConsumerState<MyIpPage> {
         child: switch (myIpState) {
           MyIpInit() => const SizedBox(),
           MyIpLoading() => const CircularProgressIndicator(),
-          MyIpSuccess(:final data) => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SelectableText(
-                  data?.ip ?? '-',
-                  style: theme.textTheme.headlineSmall,
-                ),
-                Text(
-                  data?.country ?? '-',
-                  style: theme.textTheme.headlineSmall,
-                ),
-                Text(
-                  data?.cc ?? '-',
-                  style: theme.textTheme.headlineSmall,
-                ),
-              ],
-            ),
-          MyIpFailed(:final message) => Text(
-              message,
-              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error),
-              textAlign: TextAlign.center,
-            ),
+          MyIpSuccess(:final data) =>
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SelectableText(
+                    data?.ip ?? '-',
+                    style: theme.textTheme.headlineSmall,
+                  ),
+                  Text(
+                    data?.country ?? '-',
+                    style: theme.textTheme.headlineSmall,
+                  ),
+                  Text(
+                    data?.cc ?? '-',
+                    style: theme.textTheme.headlineSmall,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async{
+                      throw StateError('Sentry Test Exception');
+                    },
+                    child: const Text('Verify Sentry Setup'),
+                  )
+                ],
+              ),
+          MyIpFailed(:final message) =>
+              Text(
+                message,
+                style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error),
+                textAlign: TextAlign.center,
+              ),
           _ => const SizedBox(),
         },
       ),

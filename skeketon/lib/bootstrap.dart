@@ -13,7 +13,6 @@ late String sslCert;
 late String authToken;
 
 Future<void> appConfiguration() async {
-  WidgetsFlutterBinding.ensureInitialized();
 
   // sslCert = await rootBundle.loadString('asset/certificates/cert.live.pem');
   sslCert = '';

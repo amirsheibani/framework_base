@@ -111,16 +111,14 @@ class _AppState extends ConsumerState<App> {
               localizationsDelegates: LocaleConfigs.localizationsDelegates,
               routerConfig: appRouter,
               theme: theme,
+
               builder: (context, child) {
-                return child ?? SizedBox();
-
-
-
-                  MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+                return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaler: const TextScaler.linear(1.0),
+                  ),
                   child: DefaultTextStyle(
                     style: const TextStyle(fontFamily: 'IRANSansX'),
-                    // child: AppBlurOverlay(child: child ?? const SizedBox()),
                     child: child ?? const SizedBox(),
                   ),
                 );

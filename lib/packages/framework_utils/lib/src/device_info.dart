@@ -1,11 +1,8 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:google_api_availability/google_api_availability.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:universal_html/js.dart' as js;
 
 enum PlatformName {
   android('Android'),
@@ -13,7 +10,6 @@ enum PlatformName {
   pwa('PWA');
 
   final String? value;
-
   const PlatformName(this.value);
 }
 
@@ -31,60 +27,60 @@ class DeviceInfo {
   String? version;
   String? buildNumber;
   String? buildSignature;
-  late bool haveGoogleService;
+  bool haveGoogleService = false;
 
-  Future<String?> init() async {
+  Future<void> init() async {
     try {
-      final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-      final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      final deviceInfoPlugin = DeviceInfoPlugin();
+      final packageInfo = await PackageInfo.fromPlatform();
+
       buildSignature = packageInfo.buildSignature;
       buildNumber = packageInfo.buildNumber;
+      version = packageInfo.version;
+
+      /// =========================
+      /// 🌐 WEB
+      /// =========================
       if (kIsWeb) {
-        final deviceInfo = js.context.callMethod('getDeviceInfo');
-        final temp = deviceInfo is String ? deviceInfo.split(':') : <String>[];
-        serialNumber = temp.isNotEmpty ? temp[0] : null;
-        brand = temp.length >= 2 ? temp[1] : null;
-        deviceName = temp.length >= 3 ? temp[2] : null;
+        final webInfo = await deviceInfoPlugin.webBrowserInfo;
+
+        brand = webInfo.browserName.name;
+        deviceName = webInfo.userAgent;
         platformName = PlatformName.pwa;
-      } else if (Platform.isAndroid) {
-        final AndroidDeviceInfo data = await deviceInfoPlugin.androidInfo;
-        brand = data.brand;
-        deviceName = data.model;
+        haveGoogleService = false;
+      }
+
+      /// =========================
+      /// 🤖 ANDROID
+      /// =========================
+      else if (defaultTargetPlatform == TargetPlatform.android) {
+        final androidInfo = await deviceInfoPlugin.androidInfo;
+
+        brand = androidInfo.brand;
+        deviceName = androidInfo.model;
         platformName = PlatformName.android;
-      } else if (Platform.isIOS) {
-        final IosDeviceInfo data = await deviceInfoPlugin.iosInfo;
-        brand = data.systemName;
-        deviceName = data.model;
+
+        final result = await GoogleApiAvailability.instance
+            .checkGooglePlayServicesAvailability();
+
+        haveGoogleService =
+            result == GooglePlayServicesAvailability.success;
+      }
+
+      /// =========================
+      /// 🍎 iOS
+      /// =========================
+      else if (defaultTargetPlatform == TargetPlatform.iOS) {
+        final iosInfo = await deviceInfoPlugin.iosInfo;
+
+        brand = iosInfo.systemName;
+        deviceName = iosInfo.model;
         platformName = PlatformName.iOS;
+
+        haveGoogleService = false;
       }
-      if(!kIsWeb && Platform.isAndroid){
-        final GooglePlayServicesAvailability resultGoogleApi = await GoogleApiAvailability.instance.checkGooglePlayServicesAvailability();
-        switch (resultGoogleApi) {
-          case GooglePlayServicesAvailability.success:
-            haveGoogleService = true;
-            break;
-          case GooglePlayServicesAvailability.unknown:
-          case GooglePlayServicesAvailability.notAvailableOnPlatform:
-          case GooglePlayServicesAvailability.serviceInvalid:
-          case GooglePlayServicesAvailability.serviceMissing:
-            haveGoogleService =  false;
-            break;
-          case GooglePlayServicesAvailability.serviceUpdating:
-            haveGoogleService =  false;
-            break;
-          case GooglePlayServicesAvailability.serviceVersionUpdateRequired:
-            haveGoogleService =  false;
-            break;
-          case GooglePlayServicesAvailability.serviceDisabled:
-            haveGoogleService =  false;
-            break;
-        }
-      }else{
-        haveGoogleService =  false;
-      }
-    } on Exception catch (e) {
+    } catch (e) {
       debugPrint(e.toString());
     }
-    return null;
   }
 }
