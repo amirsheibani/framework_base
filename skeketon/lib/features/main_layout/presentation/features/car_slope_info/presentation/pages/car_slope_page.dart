@@ -50,8 +50,7 @@ class _CarSlopePageState extends ConsumerState<CarSlopePage> {
 
   @override
   void dispose() {
-    // _gpsInfoSub?.cancel();
-    // _motionSub?.cancel();
+    // اطمینان از توقف لیسنینگ و GPS هنگام خروج از صفحه
     super.dispose();
   }
 

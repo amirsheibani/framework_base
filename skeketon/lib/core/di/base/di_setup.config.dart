@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:framework_base/di/framework_base_micro.module.dart' as _i121;
 import 'package:framework_base/packages/framework_utils/lib/utils_framework.dart'
     as _i131;
 import 'package:get_it/get_it.dart' as _i174;
@@ -31,12 +32,13 @@ import '../remote/remote_module.dart' as _i707;
 import 'mode_detection.dart' as _i937;
 
 // initializes the registration of main-scope dependencies inside of GetIt
-_i174.GetIt $initGetIt(
+Future<_i174.GetIt> $initGetIt(
   _i174.GetIt getIt, {
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
-}) {
+}) async {
   final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
+  await _i121.FrameworkBasePackageModule().init(gh);
   final remoteModule = _$RemoteModule();
   gh.singleton<_i937.ModeDetection>(() => _i937.ModeDetection());
   gh.singleton<_i131.CustomPrettyLogger>(() => remoteModule.prettyDioLogger);

@@ -128,6 +128,8 @@ class CarSlopeNotifier extends StateNotifier<CarSlopeState> {
   @override
   void dispose() {
     _slopeSubscription?.cancel();
+    GPSService _gpsService = getIt<GPSService>();
+    _gpsService.stopListening();
     super.dispose();
   }
 

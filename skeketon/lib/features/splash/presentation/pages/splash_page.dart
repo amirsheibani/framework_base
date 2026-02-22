@@ -19,7 +19,9 @@ class SplashPage extends StatelessWidget {
           next.whenOrNull(
             data: (value) {
               // context.go(AppRouterPath.gpsInfo.path);
-              context.go(AppRouterPath.mainLayout.path);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.go(AppRouterPath.mainLayout.path);
+              });
             },
           );
         },

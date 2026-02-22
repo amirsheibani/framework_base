@@ -35,6 +35,7 @@ class _MotionInfoPageState extends State<MotionInfoPage> {
   @override
   void dispose() {
     _motionSub?.cancel();
+    _motionService.stop();
     super.dispose();
   }
 

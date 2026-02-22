@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      framework_base|mapperBuilder:
+        enabled: true
+        generate_for:
+          include:
+            - lib/**
+

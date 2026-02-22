@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeleton/features/auth_layout/presentation/features/login/presentation/pages/login_page.dart';
 import 'package:skeleton/features/auth_layout/presentation/features/register/presentation/pages/register_page.dart';
@@ -18,7 +19,9 @@ import 'package:skeleton/features/splash/presentation/pages/splash_page.dart';
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     _subscription = stream.asBroadcastStream().listen((event) {
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     });
   }
 
