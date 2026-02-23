@@ -25,8 +25,8 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
       environment = DevEnvironment(
-        // baseUrl: kIsWeb ? Uri.base.origin : 'https://api.myip.com',
-        baseUrl: 'https://api.myip.com',
+        baseUrl: kIsWeb ? Uri.base.origin : 'https://api.myip.com',
+        // baseUrl: 'https://api.myip.com',
         apiVersion: '',
         mapToken: mapboxToken,
         appId: 'SKELETON',

@@ -6,17 +6,17 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i687;
 
-import 'package:framework_base/packages/framework_handler/lib/src/service/car_slope_service.dart'
+import 'package:framework_base/packages/framework_service/lib/src/car_slope_service.dart'
     as _i1056;
-import 'package:framework_base/packages/framework_handler/lib/src/service/gps_service_handler.dart'
+import 'package:framework_base/packages/framework_service/lib/src/gps_service_handler.dart'
     as _i373;
-import 'package:framework_base/packages/framework_handler/lib/src/service/internet_service/internet_service.dart'
+import 'package:framework_base/packages/framework_service/lib/src/internet_service/internet_service.dart'
     as _i853;
-import 'package:framework_base/packages/framework_handler/lib/src/service/motion_service_handler.dart'
+import 'package:framework_base/packages/framework_service/lib/src/motion_service_handler.dart'
     as _i890;
-import 'package:framework_base/packages/framework_handler/lib/src/service/nfc_service_handler.dart'
+import 'package:framework_base/packages/framework_service/lib/src/nfc_service_handler.dart'
     as _i927;
-import 'package:framework_base/packages/framework_handler/lib/src/service/supabase_auth_service_handler.dart'
+import 'package:framework_base/packages/framework_service/lib/src/supabase_auth_service_handler.dart'
     as _i708;
 import 'package:framework_base/packages/framework_utils/lib/src/device_info.dart'
     as _i631;

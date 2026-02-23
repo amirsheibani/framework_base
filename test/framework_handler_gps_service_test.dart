@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:framework_base/packages/framework_handler/lib/src/service/gps_service_handler.dart';
+import 'package:framework_base/packages/framework_service/lib/src/gps_service_handler.dart';
 
 class _MockGeolocator extends Mock implements GeolocatorPlatform {}
 

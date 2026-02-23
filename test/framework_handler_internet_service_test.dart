@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:framework_base/packages/framework_handler/lib/src/service/internet_service/internet_service_stub.dart';
+import 'package:framework_base/packages/framework_service/lib/src/internet_service/internet_service_stub.dart';
 
 void main() {
   test('InternetServiceImpl stub returns no internet by default', () async {

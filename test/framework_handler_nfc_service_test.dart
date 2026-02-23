@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
-import 'package:framework_base/packages/framework_handler/lib/src/service/nfc_service_handler.dart';
+import 'package:framework_base/packages/framework_service/lib/src/nfc_service_handler.dart';
 
 class _MockNfcManager extends Mock implements NfcManager {}
 

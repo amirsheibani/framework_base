@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'package:framework_base/packages/framework_handler/lib/src/service/supabase_auth_service_handler.dart';
+import 'package:framework_base/packages/framework_service/lib/src/supabase_auth_service_handler.dart';
 
 class _MockSupabaseClient extends Mock implements SupabaseClient {}
 

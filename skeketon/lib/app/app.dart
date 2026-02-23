@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framework_base/packages/framework_core/lib/core_framework.dart';
-import 'package:framework_base/packages/framework_handler/lib/handler_framework.dart';
+import 'package:framework_base/packages/framework_service/lib/handler_framework.dart';
 import 'package:framework_base/packages/framework_utils/lib/utils_framework.dart';
 import 'package:skeleton/app/app_lifecycle_widget.dart';
 import 'package:skeleton/app/router.dart';

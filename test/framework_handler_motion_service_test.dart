@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-import 'package:framework_base/packages/framework_handler/lib/src/service/motion_service_handler.dart';
+import 'package:framework_base/packages/framework_service/lib/src/motion_service_handler.dart';
 
 void main() {
   test('MotionService emits MotionData when accelerometer events arrive',
