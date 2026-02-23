@@ -1,6 +1,5 @@
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:framework_base/packages/framework_core/lib/core_framework.dart';
 import 'package:framework_base/packages/framework_utils/lib/utils_framework.dart';
@@ -17,7 +16,7 @@ Future<void> appConfiguration() async {
   // sslCert = await rootBundle.loadString('asset/certificates/cert.live.pem');
   sslCert = '';
 
-  configureDependencies();
+  await configureDependencies();
 
   final deviceInfo = getIt<DeviceInfo>();
   await deviceInfo.init();

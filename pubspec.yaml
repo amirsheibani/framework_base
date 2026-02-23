@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
   injectable: ^2.5.1
   retrofit: ^4.9.2
+  shared_preferences: ^2.5.3
+  flutter_secure_storage: ^9.2.4
+  json_annotation: ^4.9.0
   connectivity_plus: ^6.0.3
   geolocator: ^14.0.2
   internet_connection_checker: ^1.0.0+1
@@ -32,7 +35,6 @@ dependencies:
   analyzer: ^8.0.0
   collection: ^1.18.0
   build: ^4.0.4
-  source_gen: ^4.2.0
   web: ^1.0.0
   plugin_platform_interface: ^2.0.2
 #  js: ^0.7.1
@@ -44,6 +46,7 @@ dev_dependencies:
   mocktail: ^1.0.4
   build_runner: ^2.11.0
   injectable_generator: ^2.6.2
+  json_serializable: ^6.9.2
   lints: ^3.0.0
   test: ^1.25.0
 

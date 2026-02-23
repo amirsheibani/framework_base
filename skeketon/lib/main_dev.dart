@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:framework_base/packages/framework_core/lib/core_framework.dart';
 import 'package:skeleton/app/app.dart';
 import 'package:skeleton/bootstrap.dart';
@@ -25,8 +24,8 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
       environment = DevEnvironment(
-        baseUrl: kIsWeb ? Uri.base.origin : 'https://api.myip.com',
-        // baseUrl: 'https://api.myip.com',
+        // baseUrl: kIsWeb ? Uri.base.host : 'https://api.myip.com',
+        baseUrl: 'https://api.myip.com',
         apiVersion: '',
         mapToken: mapboxToken,
         appId: 'SKELETON',

@@ -13,8 +13,8 @@ final GetIt getIt = GetIt.instance;
     ExternalModule(FrameworkBasePackageModule),
   ],
 )
-void configureDependencies(){
-  $initGetIt(getIt);
+Future<void> configureDependencies() async {
+  await $initGetIt(getIt);
 }
 
 

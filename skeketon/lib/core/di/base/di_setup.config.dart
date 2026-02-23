@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
 import 'package:framework_base/di/framework_base_micro.module.dart' as _i121;
+import 'package:framework_base/packages/framework_storage/lib/storage_framework.dart'
+    as _i978;
 import 'package:framework_base/packages/framework_utils/lib/utils_framework.dart'
     as _i131;
 import 'package:get_it/get_it.dart' as _i174;
@@ -56,7 +58,10 @@ Future<_i174.GetIt> $initGetIt(
     () => _i151.IpDataSourceImpl(gh<_i675.IpService>()),
   );
   gh.factory<_i18.IpRepository>(
-    () => _i182.IpRepositoryImpl(gh<_i947.IpDataSource>()),
+    () => _i182.IpRepositoryImpl(
+      gh<_i947.IpDataSource>(),
+      gh<_i978.UnifiedStorage>(),
+    ),
   );
   gh.factory<_i212.MyIpUseCase>(
     () => _i212.MyIpUseCase(gh<_i18.IpRepository>()),
