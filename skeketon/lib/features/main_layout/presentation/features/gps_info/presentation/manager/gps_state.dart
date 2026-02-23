@@ -1,5 +1,5 @@
 
-import 'package:framework_base/packages/framework_service/lib/handler_framework.dart';
+import 'package:framework_base/framework_base.dart';
 import 'package:geolocator/geolocator.dart';
 
 base class GPSState {

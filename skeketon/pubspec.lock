@@ -552,11 +552,9 @@ packages:
   framework_base:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: bd4c1f4718376a7bd29f8769ce2c14961003b9f7
-      url: "https://github.com/amirsheibani/framework_base.git"
-    source: git
+      path: ".."
+      relative: true
+    source: path
     version: "0.0.1"
   frontend_server_client:
     dependency: transitive

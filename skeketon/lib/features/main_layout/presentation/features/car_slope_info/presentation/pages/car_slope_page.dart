@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:framework_base/packages/framework_service/lib/handler_framework.dart';
+import 'package:framework_base/framework_base.dart';
 import 'package:skeleton/features/main_layout/presentation/features/car_slope_info/presentation/manager/car_slope_provider.dart';
 import 'package:skeleton/features/main_layout/presentation/features/car_slope_info/presentation/manager/car_slope_state.dart';
 

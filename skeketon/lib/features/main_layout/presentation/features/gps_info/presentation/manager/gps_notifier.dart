@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:framework_base/packages/framework_service/lib/handler_framework.dart';
+import 'package:framework_base/framework_base.dart';
 import 'package:skeleton/core/di/base/di_setup.dart';
 import 'package:skeleton/features/main_layout/presentation/features/gps_info/presentation/manager/gps_state.dart';
 

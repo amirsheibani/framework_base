@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:framework_base/packages/framework_service/lib/handler_framework.dart';
+import 'package:framework_base/framework_base.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:skeleton/core/di/base/di_setup.dart';
 
