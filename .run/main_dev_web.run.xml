@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="main_dev" type="FlutterRunConfigurationType" factoryName="Flutter">
+  <configuration default="false" name="main_dev_web" type="FlutterRunConfigurationType" factoryName="Flutter">
     <option name="additionalArgs" value="-d chrome --web-browser-flag=&quot;--disable-web-security&quot; --web-browser-flag=&quot;--user-data-dir=/tmp/chrome_dev_test&quot; --dart-define=MAPBOX_TOKEN=''" />
     <option name="buildFlavor" value="dev" />
     <option name="filePath" value="$PROJECT_DIR$/skeketon/lib/main_dev.dart" />

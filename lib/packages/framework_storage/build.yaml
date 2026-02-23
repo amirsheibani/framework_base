@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      framework_base|storage_repo:
+        enabled: true
+
+builders:
+  storage_repo:
+    import: "package:framework_base/packages/framework_storage/lib/src/generator/builder.dart"
+    builder_factories: ["storageRepoBuilder"]
+    build_extensions: {".dart": [".storage_repo.g.dart"]}
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen|combining_builder"]
