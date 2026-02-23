@@ -12,8 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  framework_base:
-    path: ../
+#  framework_base:
+#    path: ../
 
 #  framework_base:
 #    git:
