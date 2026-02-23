@@ -8,5 +8,6 @@ export 'packages/framework_utils/lib/utils_framework.dart';
 export 'packages/framework_service/lib/service_framework.dart';
 export 'packages/framework_storage/lib/storage_framework.dart';
 export 'packages/dart_mapper/lib/dart_mapper.dart';
+export 'packages/dart_mapper/builder.dart';
 export 'di/framework_base_micro.dart';
 export 'di/framework_base_micro.module.dart';

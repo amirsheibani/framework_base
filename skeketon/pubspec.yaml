@@ -18,7 +18,7 @@ dependencies:
   framework_base:
     git:
       url: https://github.com/amirsheibani/framework_base.git
-      
+
   go_router: ^17.0.1
   flutter_riverpod: ^2.4.0
   cupertino_icons: ^1.0.8

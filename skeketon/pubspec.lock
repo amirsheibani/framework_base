@@ -554,7 +554,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1944b33c2cb19f50c8041f7379a726806fa68122"
+      resolved-ref: bd4c1f4718376a7bd29f8769ce2c14961003b9f7
       url: "https://github.com/amirsheibani/framework_base.git"
     source: git
     version: "0.0.1"
@@ -1186,10 +1186,10 @@ packages:
     dependency: transitive
     description:
       name: posix
-      sha256: "6323a5b0fa688b6a010df4905a56b00181479e6d10534cecfecede2aa55add61"
+      sha256: "185ef7606574f789b40f289c233efa52e96dead518aed988e040a10737febb07"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.3"
+    version: "6.5.0"
   postgrest:
     dependency: transitive
     description:
