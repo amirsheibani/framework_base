@@ -554,7 +554,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "31fd8ab8a59863ee7d76e46b81f520496255ce81"
+      resolved-ref: "954278791cf4fdfe39f265605f9855b72054fbcb"
       url: "https://github.com/amirsheibani/framework_base.git"
     source: git
     version: "0.0.1"

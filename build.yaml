@@ -1,8 +1,23 @@
+targets:
+  $default:
+    builders:
+      framework_base|storage_repo:
+        enabled: true
+      framework_base|mapperBuilder:
+        enabled: true
 builders:
   mapperBuilder:
-    import: "package:framework_base/packages/dart_mapper/builder.dart"
+    import: "package:framework_base/packages/framework_mapper/lib/builder.dart"
     builder_factories: ["mapperBuilder"]
     build_extensions: {".dart": [".mapper.dart"]}
     auto_apply: dependents
     build_to: source
     applies_builders: ["source_gen|combining_builder"]
+
+  storage_repo:
+    import: "package:framework_base/packages/framework_storage/lib/src/generator/builder.dart"
+    builder_factories: [ "storageRepoBuilder" ]
+    build_extensions: { ".dart": [ ".storage_repo.g.dart" ] }
+    auto_apply: dependents
+    build_to: source
+    applies_builders: [ "source_gen|combining_builder" ]
