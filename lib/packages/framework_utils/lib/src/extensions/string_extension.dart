@@ -332,4 +332,11 @@ extension StringExtension on String? {
   String get convertSpaceToHalfSpace {
     return this!.replaceAll('_', '\u200c');
   }
+
+  bool get isUrl {
+    if(this == null){
+      return false;
+    }
+    return this!.startsWith('http://') || this!.startsWith('https://');
+  }
 }
