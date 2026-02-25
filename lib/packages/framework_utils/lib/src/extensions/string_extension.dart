@@ -339,4 +339,11 @@ extension StringExtension on String? {
     }
     return this!.startsWith('http://') || this!.startsWith('https://');
   }
+
+  String mediaKind(String? mime) {
+    if (mime == null) return 'unknown';
+    if (mime.startsWith('image/')) return 'image';
+    if (mime.startsWith('video/')) return 'video';
+    return 'other';
+  }
 }

@@ -2,7 +2,9 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:cross_file/cross_file.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image/image.dart';
+import 'package:mime/mime.dart';
 
 extension XFileExt on XFile {
   Future<String> fileSizeStr(int decimals) async {
@@ -38,5 +40,14 @@ extension XFileExt on XFile {
     final thumbnail = copyCrop(image, x: x, y: y, width: width.ceil(), height: height.ceil());
     final imageEncode = encodeJpg(thumbnail);
     return XFile.fromData(imageEncode);
+  }
+
+   Future<String?> mimeFile() async {
+    final Uint8List result = await readAsBytes();
+    final mimeType = lookupMimeType(
+      path,
+      headerBytes: result.take(16).toList(),
+    );
+    return mimeType;
   }
 }
