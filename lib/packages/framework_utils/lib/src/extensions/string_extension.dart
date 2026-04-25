@@ -346,4 +346,16 @@ extension StringExtension on String? {
     if (mime.startsWith('video/')) return 'video';
     return 'other';
   }
+
+  Color? get hexToColor{
+    if(this == null){
+      return null;
+    }
+    String value = this!;
+    value = value.replaceAll('#', '');
+    if (value.length == 6) {
+      value = 'FF$value'; // add full opacity if alpha not provided
+    }
+    return Color(int.parse(value, radix: 16));
+  }
 }

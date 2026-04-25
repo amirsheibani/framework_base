@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 enum PlatformName {
   android('Android'),
   iOS('iOS'),
+  macOS('macOS'),
   pwa('PWA');
 
   final String? value;
@@ -76,6 +77,19 @@ class DeviceInfo {
         brand = iosInfo.systemName;
         deviceName = iosInfo.model;
         platformName = PlatformName.iOS;
+
+        haveGoogleService = false;
+      }
+
+      /// =========================
+      /// 🍎 iOS
+      /// =========================
+      else if (defaultTargetPlatform == TargetPlatform.macOS) {
+        final iosInfo = await deviceInfoPlugin.macOsInfo;
+
+        brand = iosInfo.modelName;
+        deviceName = iosInfo.model;
+        platformName = PlatformName.macOS;
 
         haveGoogleService = false;
       }

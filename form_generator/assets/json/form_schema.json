@@ -1,0 +1,205 @@
+{
+  "id": "123456",
+  "version": 1,
+  "title": "فرم ثبت‌نام کاربر جدید",
+  "sections": [
+    {
+      "id": "personal_info",
+      "title": "اطلاعات شخصی",
+      "type": "container",
+      "padding_only": {
+        "paddingTop": 32.0,
+        "paddingLeft": 16.0,
+        "paddingRight": 16.0,
+        "paddingBottom": 0.0
+      },
+      "decoration": {
+        "color": "#f0f0f0",
+        "borderRadiusAll": 16.0
+      },
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "نام و نام خانوادگی",
+          "type": "text",
+          "placeholder": "مثلاً علی رضایی",
+          "validationRules": [
+            {
+              "type": "required"
+            },
+            {
+              "type": "minLength",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "name": "email",
+          "label": "ایمیل",
+          "type": "email",
+          "validationRules": [
+            {
+              "type": "required"
+            },
+            {
+              "type": "email"
+            }
+          ]
+        },
+        {
+          "name": "phone",
+          "label": "شماره تماس",
+          "type": "phone",
+          "validationRules": [
+            {
+              "type": "pattern",
+              "value": "^09[0-9]{9}$"
+            }
+          ]
+        },
+        {
+          "name": "birthDate",
+          "label": "تاریخ تولد",
+          "type": "date"
+        },
+        {
+          "name": "preferredTime",
+          "label": "ساعت تماس دلخواه",
+          "type": "time"
+        }
+      ]
+    },
+    {
+      "id": "spase_1",
+      "title": "Spase",
+      "type": "sizedBox",
+      "height": 40.0
+    },
+    {
+      "id": "personal_info",
+      "title": "اطلاعات شخصی",
+      "type": "container",
+      "padding_only": {
+        "paddingTop": 32.0,
+        "paddingLeft": 16.0,
+        "paddingRight": 16.0,
+        "paddingBottom": 0.0
+      },
+      "decoration": {
+        "color": "#f0f0f0",
+        "borderRadiusAll": 16.0
+      },
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "نام و نام خانوادگی",
+          "type": "text",
+          "placeholder": "مثلاً علی رضایی",
+          "validationRules": [
+            {
+              "type": "required"
+            },
+            {
+              "type": "minLength",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "name": "email",
+          "label": "ایمیل",
+          "type": "email",
+          "validationRules": [
+            {
+              "type": "required"
+            },
+            {
+              "type": "email"
+            }
+          ]
+        },
+        {
+          "name": "phone",
+          "label": "شماره تماس",
+          "type": "phone",
+          "validationRules": [
+            {
+              "type": "pattern",
+              "value": "^09[0-9]{9}$"
+            }
+          ]
+        },
+        {
+          "name": "birthDate",
+          "label": "تاریخ تولد",
+          "type": "date"
+        },
+        {
+          "name": "preferredTime",
+          "label": "ساعت تماس دلخواه",
+          "type": "time"
+        }
+      ]
+    },
+    {
+      "id": "spase_2",
+      "title": "Spase",
+      "type": "sizedBox",
+      "height": 20.0
+    },
+    {
+      "id": "preferences",
+      "title": "ترجیحات کاربر",
+      "type": "container",
+      "padding_all": 8.0,
+      "decoration": {
+        "color": "#ff4488",
+        "borderRadiusAll": 16.0
+      },
+      "fields": [
+        {
+          "name": "contactMethod",
+          "label": "روش تماس دلخواه",
+          "type": "radio",
+          "options": [
+            "ایمیل",
+            "تلفن",
+            "پیامک"
+          ],
+          "validationRules": [
+            {
+              "type": "required"
+            }
+          ]
+        },
+        {
+          "name": "timeRange",
+          "label": "بازه زمانی تماس",
+          "type": "dropdown",
+          "options": [
+            "صبح",
+            "ظهر",
+            "عصر"
+          ],
+          "visibleWhen": [
+            {
+              "field": "contactMethod",
+              "operator": "equals",
+              "value": "تلفن"
+            }
+          ]
+        },
+        {
+          "name": "acceptTerms",
+          "label": "شرایط استفاده را می‌پذیرم",
+          "type": "checkbox",
+          "validationRules": [
+            {
+              "type": "required"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

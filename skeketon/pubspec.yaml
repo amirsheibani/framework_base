@@ -12,12 +12,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-#  framework_base:
-#    path: ../
-
   framework_base:
-    git:
-      url: https://github.com/amirsheibani/framework_base.git
+    path: ../
+#
+#  framework_base:
+#    git:
+#      url: https://github.com/amirsheibani/framework_base.git
 
   go_router: ^17.0.1
   flutter_riverpod: ^2.4.0
@@ -55,8 +55,6 @@ dependencies:
 #    git:
 #      url: https://github.com/amirsheibani/dart_mapper.git
 
-dependency_overrides:
-  dart_mappable: 3.3.0
 
 
 dev_dependencies:
