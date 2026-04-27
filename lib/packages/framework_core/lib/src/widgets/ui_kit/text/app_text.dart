@@ -25,7 +25,7 @@ class AppText extends StatelessWidget {
   const AppText(
     this.data, {
     super.key,
-    this.type = TextType.nonSelectable,
+    this.type = TextType.selectable,
     this.style,
     this.strutStyle,
     this.textAlign,

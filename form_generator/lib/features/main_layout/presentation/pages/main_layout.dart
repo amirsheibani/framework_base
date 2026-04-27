@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_generator/features/main_layout/presentation/widgets/demo_app_alert.dart';
 import 'package:form_generator/features/main_layout/presentation/widgets/demo_app_button.dart';
+import 'package:form_generator/features/main_layout/presentation/widgets/demo_app_radio.dart';
 import 'package:framework_base/framework_base.dart';
 import 'package:hugeicons/hugeicons.dart';
 
+import '../widgets/demo_app_avatar.dart';
+import '../widgets/demo_app_switch.dart';
 import '../widgets/demo_app_text_form_field.dart';
 
 class MainLayout extends ConsumerStatefulWidget {
@@ -37,15 +41,39 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
         child: Column(
           children: [
             Container(
-              color: Colors.white,
+              color: Theme.of(context).backgroundSurface.main,
                 padding: EdgeInsets.symmetric(horizontal: AppSize.small),
                 child: DemoAppButton(),
             ),
             AppSize.small.gapHeight,
             Container(
-              color: Colors.white,
+              color: Theme.of(context).backgroundSurface.main,
               padding: EdgeInsets.symmetric(horizontal: AppSize.small),
                 child: DemoAppTextFormField(),
+            ),
+            AppSize.small.gapHeight,
+            Container(
+              color: Theme.of(context).backgroundSurface.main,
+              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+              child: DemoAppAlert(),
+            ),
+            AppSize.small.gapHeight,
+            Container(
+              color: Theme.of(context).backgroundSurface.main,
+              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+              child: DemoAppAvatar(),
+            ),
+            AppSize.small.gapHeight,
+            Container(
+              color: Theme.of(context).backgroundSurface.main,
+              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+              child: DemoAppRadio(),
+            ),
+            AppSize.small.gapHeight,
+            Container(
+              color: Theme.of(context).backgroundSurface.main,
+              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+              child: DemoAppSwitch(),
             ),
           ],
         ),
