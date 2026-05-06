@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:framework_base/framework_base.dart';
 
@@ -53,7 +53,7 @@ class _AppSwitchLabelState extends State<AppSwitchLabel> {
               ],
             if(widget.onTapLabel != null) ...[
               AppSize.xsmall.gapHeight,
-              InkWell(onTap: widget.onTap, child: AppText(type: TextType.nonSelectable,widget.onTapLabel!, style: Theme.of(context).textMRegular.copyWith(color: widget.disabled ? Theme.of(context).text.subtle.withAlpha(102) : Theme.of(context).text.subtle) )),
+              InkWell(onTap: widget.onTap, child: AppText(selectedType: TextSelectedType.nonSelectable,widget.onTapLabel!, style: Theme.of(context).textMRegular.copyWith(color: widget.disabled ? Theme.of(context).text.subtle.withAlpha(102) : Theme.of(context).text.subtle) )),
               AppSize.xsmall.gapHeight,
             ]
           ],

@@ -1,5 +1,7 @@
 
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -17,8 +19,9 @@ class MaxValueRule extends ValidationRuleBase {
     final max = config?[RuleFieldType.maxValue.toString()] ?? 9999999;
 
     if (value > max) {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.maxValue)?.message;
       return ValidationResult(
-          message: "${field.label} must be <= $max", isValid: false);
+          message: message ??  "${field.id} must be <= $max", isValid: false);
     }
 
     return ValidationResult.valid();

@@ -1,6 +1,8 @@
 
 
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -17,9 +19,11 @@ class EmailRule extends ValidationRuleBase {
 
     final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
+
     if (!regex.hasMatch(value)) {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.email)?.message;
       return ValidationResult(
-          message: config?['message'] ?? "${field.label} is not a valid email", isValid: false);
+          message: message ?? "${field.id} is not a valid email", isValid: false);
     }
 
     return ValidationResult.valid();

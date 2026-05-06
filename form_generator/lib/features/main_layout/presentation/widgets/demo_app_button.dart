@@ -25,6 +25,8 @@ class DemoAppButton extends StatelessWidget {
               suffixIcon: HugeIcon(icon: HugeIcons.strokeRoundedAdd01),
             ),
             AppSize.xsmall.gapWidth,
+            AppButton.icon(type: AppButtonType.primaryFilled, icon: HugeIcon(icon: HugeIcons.strokeRoundedAlertCircle)),
+            AppSize.xsmall.gapWidth,
             AppButton(
               type: AppButtonType.primaryFilled,
               size: AppButtonSize.medium,

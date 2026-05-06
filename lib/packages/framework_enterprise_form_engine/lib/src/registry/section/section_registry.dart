@@ -1,14 +1,13 @@
 
 import 'package:flutter/widgets.dart';
-import 'package:framework_base/packages/framework_enterprise_form_engine/lib/src/state/form_section_state.dart';
 
-
-import '../../core/field_type.dart';
-import '../../core/form_field.dart';
 import '../../core/form_section/form_section.dart';
+import '../../core/form_section/margin/margin_all.dart';
+import '../../core/form_section/margin/margin_horizontal.dart';
+import '../../core/form_section/margin/margin_only.dart';
+import '../../core/form_section/margin/margin_vertical.dart';
 import '../../core/form_section/section_type.dart';
 import '../../state/form_state_controller.dart';
-import '../field/field_registry.dart';
 import 'section_renderer.dart';
 typedef SectionRendererBuilder = SectionRenderer Function(Widget? child);
 
@@ -33,12 +32,35 @@ class SectionRegistry {
       return Text("No renderer registered for ${section.type}");
     }
 
-    final  state = controller.getSectionState(section.title);
+    final state = controller.getSectionState(section.id);
     if (state == null) {
-      return Text("No state found for section '${section.title}'");
+      return Text("No state found for section '${section.id}'");
     }
 
-    return renderer(child).render(context, section, state);
+    final built = renderer(child).render(context, section, state);
+
+    final margin = section.margin;
+    if (margin == null) return built;
+
+    EdgeInsets toEdgeInsets() {
+      if (margin is FormSectionMarginAll) {
+        return EdgeInsets.all(margin.value ?? 0.0);
+      } else if (margin is FormSectionMarginVertical) {
+        return EdgeInsets.symmetric(vertical: margin.value ?? 0.0);
+      } else if (margin is FormSectionMarginHorizontal) {
+        return EdgeInsets.symmetric(horizontal: margin.value ?? 0.0);
+      } else if (margin is FormSectionMarginOnly) {
+        return EdgeInsets.only(
+          left: margin.marginLeft ?? 0.0,
+          right: margin.marginRight ?? 0.0,
+          top: margin.marginTop ?? 0.0,
+          bottom: margin.marginBottom ?? 0.0,
+        );
+      }
+      return EdgeInsets.zero;
+    }
+
+    return Padding(padding: toEdgeInsets(), child: built);
   }
 
   /// Checks if this field type has a renderer

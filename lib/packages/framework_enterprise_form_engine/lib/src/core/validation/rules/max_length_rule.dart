@@ -1,6 +1,8 @@
 
 
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -17,9 +19,11 @@ class MaxLengthRule extends ValidationRuleBase {
 
     final max = config?[RuleFieldType.maxLength.toString()] ?? 99999;
 
+
     if (value is String && value.length > max) {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.maxLength)?.message;
       return ValidationResult(
-          message: "${field.label} must be at most $max characters", isValid: false);
+          message: message ?? "${field.id} must be at most $max characters", isValid: false);
     }
 
     return ValidationResult.valid();

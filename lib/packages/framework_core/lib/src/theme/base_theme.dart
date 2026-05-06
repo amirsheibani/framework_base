@@ -3,6 +3,96 @@ import 'package:flutter/services.dart';
 
 enum ThemeType { light, dark, system }
 
+enum TextStyleEnum {
+  displayXLRegular,
+  displayXLMedium,
+  displayXLDemiBold,
+  displayXLExtraBold,
+  displayLRegular,
+  displayLMedium,
+  displayLDemiBold,
+  displayLExtraBold,
+  displayMRegular,
+  displayMMedium,
+  displayMDemiBold,
+  displayMExtraBold,
+  textXXLRegular,
+  textXXLMedium,
+  textXXLDemiBold,
+  textXXLExtraBold,
+  textXLRegular,
+  textXLMedium,
+  textXLDemiBold,
+  textXLExtraBold,
+  textLRegular,
+  textLMedium,
+  textLDemiBold,
+  textLExtraBold,
+  textMRegular,
+  textMMedium,
+  textMDemiBold,
+  textMExtraBold,
+  textSRegular,
+  textSMedium,
+  textSDemiBold,
+  textSExtraBold,
+  textXSRegular,
+  textXSMedium,
+  textXSDemiBold,
+  textXSExtraBold,
+  textXXSRegular,
+  textXXSMedium,
+  textXXSDemiBold,
+  textXXSExtraBold,
+}
+
+extension OnTextStyleEnum on TextStyleEnum {
+  TextStyle getStyle(BuildContext context, Color? color) {
+    return switch (this) {
+      TextStyleEnum.displayXLRegular => Theme.of(context).displayXLRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayXLMedium => Theme.of(context).displayXLMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayXLDemiBold => Theme.of(context).displayXLDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayXLExtraBold => Theme.of(context).displayXLExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayLRegular => Theme.of(context).displayLRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayLMedium => Theme.of(context).displayLMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayLDemiBold => Theme.of(context).displayLDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayLExtraBold => Theme.of(context).displayLExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayMRegular => Theme.of(context).displayMRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayMMedium => Theme.of(context).displayMMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayMDemiBold => Theme.of(context).displayMDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.displayMExtraBold => Theme.of(context).displayMExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXLRegular => Theme.of(context).textXXLRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXLMedium => Theme.of(context).textXXLMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXLDemiBold => Theme.of(context).textXXLDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXLExtraBold => Theme.of(context).textXXLExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXLRegular => Theme.of(context).textXLRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXLMedium => Theme.of(context).textXLMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXLDemiBold => Theme.of(context).textXLDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXLExtraBold => Theme.of(context).textXLExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textLRegular => Theme.of(context).textLRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textLMedium => Theme.of(context).textLMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textLDemiBold => Theme.of(context).textLDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textLExtraBold => Theme.of(context).textLExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textMRegular => Theme.of(context).textMRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textMMedium => Theme.of(context).textMMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textMDemiBold => Theme.of(context).textMDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textMExtraBold => Theme.of(context).textMExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textSRegular => Theme.of(context).textSRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textSMedium => Theme.of(context).textSMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textSDemiBold => Theme.of(context).textSDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textSExtraBold => Theme.of(context).textSExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXSRegular => Theme.of(context).textXSRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXSMedium => Theme.of(context).textXSMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXSDemiBold => Theme.of(context).textXSDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXSExtraBold => Theme.of(context).textXSExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXSRegular => Theme.of(context).textXXSRegular.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXSMedium => Theme.of(context).textXXSMedium.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXSDemiBold => Theme.of(context).textXXSDemiBold.copyWith(color: color ?? Theme.of(context).text.main),
+      TextStyleEnum.textXXSExtraBold => Theme.of(context).textXXSExtraBold.copyWith(color: color ?? Theme.of(context).text.main),
+    };
+  }
+}
+
 class PalletColor extends MaterialColor {
   const PalletColor(super.primary, super.swatch);
 
@@ -220,7 +310,6 @@ extension OnAppTheme on ThemeData {
           28: Color(0xFF8EC5FF), //accent-subtle
           0: Color(0xFF2B7FFF), //accent
         })
-
       : const PalletColor(0xFF000000, <int, Color>{
           10: Color(0xFF262626), //base
           9: Color(0xFF404040), //subtle
@@ -249,337 +338,88 @@ extension OnAppTheme on ThemeData {
           34: Color(0x66F54900), //active
           25: Color(0x40E5E7EB), //soft
         });
+
   PalletColor get hover => const PalletColor(0x1A000000, <int, Color>{});
+
   PalletColor get press => const PalletColor(0x26000000, <int, Color>{});
 
-  TextStyle get displayXLRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 64.0,
-    fontWeight: FontWeight.w400,
-    height: 0.66,
-    letterSpacing: 0,
-  );
-  TextStyle get displayXLMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 64.0,
-    fontWeight: FontWeight.w500,
-    height: 0.66,
-    letterSpacing: 0,
-  );
-  TextStyle get displayXLDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 64.0,
-    fontWeight: FontWeight.w600,
-    height: 0.66,
-    letterSpacing: 0,
-  );
-  TextStyle get displayXLExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 64.0,
-    fontWeight: FontWeight.w800,
-    height: 96,
-    letterSpacing: 0,
-  );
+  TextStyle get displayXLRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 64.0, fontWeight: FontWeight.w400, height: 0.66, letterSpacing: 0);
 
-  TextStyle get displayLRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 48.0,
-    fontWeight: FontWeight.w400,
-    height: 0.75,
-    letterSpacing: 0,
-  );
-  TextStyle get displayLMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 48.0,
-    fontWeight: FontWeight.w500,
-    height: 0.75,
-    letterSpacing: 0,
-  );
-  TextStyle get displayLDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 48.0,
-    fontWeight: FontWeight.w600,
-    height: 0.75,
-    letterSpacing: 0,
-  );
-  TextStyle get displayLExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 48.0,
-    fontWeight: FontWeight.w800,
-    height: 0.75,
-    letterSpacing: 0,
-  );
+  TextStyle get displayXLMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 64.0, fontWeight: FontWeight.w500, height: 0.66, letterSpacing: 0);
 
-  TextStyle get displayMRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 40.0,
-    fontWeight: FontWeight.w400,
-    height: 0.62,
-    letterSpacing: 0,
-  );
-  TextStyle get displayMMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 40.0,
-    fontWeight: FontWeight.w500,
-    height: 0.62,
-    letterSpacing: 0,
-  );
-  TextStyle get displayMDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 40.0,
-    fontWeight: FontWeight.w600,
-    height: 0.62,
-    letterSpacing: 0,
-  );
-  TextStyle get displayMExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 40.0,
-    fontWeight: FontWeight.w800,
-    height: 0.62,
-    letterSpacing: 0,
-  );
+  TextStyle get displayXLDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 64.0, fontWeight: FontWeight.w600, height: 0.66, letterSpacing: 0);
 
-  TextStyle get textXXLRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 32.0,
-    fontWeight: FontWeight.w400,
-    height: 0.66,
-    letterSpacing: 0,
-  );
-  TextStyle get textXXLMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 32.0,
-    fontWeight: FontWeight.w500,
-    height: 0.66,
-    letterSpacing: 0,
-  );
-  TextStyle get textXXLDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 32.0,
-    fontWeight: FontWeight.w600,
-    height: 0.66,
-    letterSpacing: 0,
-  );
-  TextStyle get textXXLExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 32.0,
-    fontWeight: FontWeight.w800,
-    height: 48,
-    letterSpacing: 0,
-  );
+  TextStyle get displayXLExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 64.0, fontWeight: FontWeight.w800, height: 96, letterSpacing: 0);
 
-  TextStyle get textXLRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 24.0,
-    fontWeight: FontWeight.w400,
-    height: 1.33,
-    letterSpacing: 0,
-  );
-  TextStyle get textXLMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 24.0,
-    fontWeight: FontWeight.w500,
-    height: 1.33,
-    letterSpacing: 0,
-  );
-  TextStyle get textXLDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 24.0,
-    fontWeight: FontWeight.w600,
-    height: 1.33,
-    letterSpacing: 0,
-  );
-  TextStyle get textXLExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 24.0,
-    fontWeight: FontWeight.w800,
-    height: 1.33,
-    letterSpacing: 0,
-  );
+  TextStyle get displayLRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 48.0, fontWeight: FontWeight.w400, height: 0.75, letterSpacing: 0);
 
-  TextStyle get textLRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 20.0,
-    fontWeight: FontWeight.w400,
-    height: 1.6,
-    letterSpacing: 0,
-  );
-  TextStyle get textLMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 20.0,
-    fontWeight: FontWeight.w500,
-    height: 1.6,
-    letterSpacing: 0,
-  );
-  TextStyle get textLDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 20.0,
-    fontWeight: FontWeight.w600,
-    height: 1.6,
-    letterSpacing: 0,
-  );
-  TextStyle get textLExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 20.0,
-    fontWeight: FontWeight.w800,
-    height: 1.6,
-    letterSpacing: 0,
-  );
+  TextStyle get displayLMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 48.0, fontWeight: FontWeight.w500, height: 0.75, letterSpacing: 0);
 
-  TextStyle get textMRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 16.0,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
-    letterSpacing: 0,
-  );
-  TextStyle get textMMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 16.0,
-    fontWeight: FontWeight.w500,
-    height: 1.5,
-    letterSpacing: 0,
-  );
-  TextStyle get textMDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 16.0,
-    fontWeight: FontWeight.w600,
-    height: 1.5,
-    letterSpacing: 0,
-  );
-  TextStyle get textMExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 16.0,
-    fontWeight: FontWeight.w800,
-    height: 1.5,
-    letterSpacing: 0,
-  );
+  TextStyle get displayLDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 48.0, fontWeight: FontWeight.w600, height: 0.75, letterSpacing: 0);
 
+  TextStyle get displayLExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 48.0, fontWeight: FontWeight.w800, height: 0.75, letterSpacing: 0);
 
-  TextStyle get textSRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 14.0,
-    fontWeight: FontWeight.w400,
-    height: 1.42,
-    letterSpacing: 0,
-  );
-  TextStyle get textSMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 14.0,
-    fontWeight: FontWeight.w500,
-    height: 1.42,
-    letterSpacing: 0,
-  );
-  TextStyle get textSDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 14.0,
-    fontWeight: FontWeight.w600,
-    height: 1.42,
-    letterSpacing: 0,
-  );
-  TextStyle get textSExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 14.0,
-    fontWeight: FontWeight.w800,
-    height: 1.42,
-    letterSpacing: 0,
-  );
+  TextStyle get displayMRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 40.0, fontWeight: FontWeight.w400, height: 0.62, letterSpacing: 0);
 
-  TextStyle get textXSRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 12.0,
-    fontWeight: FontWeight.w400,
-    height: 1.3,
-    letterSpacing: 0,
-  );
-  TextStyle get textXSMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 12.0,
-    fontWeight: FontWeight.w500,
-    height: 1.3,
-    letterSpacing: 0,
-  );
-  TextStyle get textXSDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 12.0,
-    fontWeight: FontWeight.w600,
-    height: 1.3,
-    letterSpacing: 0,
-  );
-  TextStyle get textXSExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 12.0,
-    fontWeight: FontWeight.w800,
-    height: 1.3,
-    letterSpacing: 0,
-  );
+  TextStyle get displayMMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 40.0, fontWeight: FontWeight.w500, height: 0.62, letterSpacing: 0);
 
-  TextStyle get textXXSRegular => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 10.0,
-    fontWeight: FontWeight.w400,
-    height: 1.6,
-    letterSpacing: 0,
-  );
-  TextStyle get textXXSMedium => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 10.0,
-    fontWeight: FontWeight.w500,
-    height: 1.6,
-    letterSpacing: 0,
-  );
-  TextStyle get textXXSDemiBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 10.0,
-    fontWeight: FontWeight.w600,
-    height: 1.6,
-    letterSpacing: 0,
-  );
-  TextStyle get textXXSExtraBold => textTheme.labelMedium!.copyWith(
-    fontFamily: 'IRANSansXFaNum',
-    color: text.main,
-    fontSize: 10.0,
-    fontWeight: FontWeight.w800,
-    height: 1.6,
-    letterSpacing: 0,
-  );
+  TextStyle get displayMDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 40.0, fontWeight: FontWeight.w600, height: 0.62, letterSpacing: 0);
+
+  TextStyle get displayMExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 40.0, fontWeight: FontWeight.w800, height: 0.62, letterSpacing: 0);
+
+  TextStyle get textXXLRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 32.0, fontWeight: FontWeight.w400, height: 0.66, letterSpacing: 0);
+
+  TextStyle get textXXLMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 32.0, fontWeight: FontWeight.w500, height: 0.66, letterSpacing: 0);
+
+  TextStyle get textXXLDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 32.0, fontWeight: FontWeight.w600, height: 0.66, letterSpacing: 0);
+
+  TextStyle get textXXLExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 32.0, fontWeight: FontWeight.w800, height: 48, letterSpacing: 0);
+
+  TextStyle get textXLRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 24.0, fontWeight: FontWeight.w400, height: 1.33, letterSpacing: 0);
+
+  TextStyle get textXLMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 24.0, fontWeight: FontWeight.w500, height: 1.33, letterSpacing: 0);
+
+  TextStyle get textXLDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 24.0, fontWeight: FontWeight.w600, height: 1.33, letterSpacing: 0);
+
+  TextStyle get textXLExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 24.0, fontWeight: FontWeight.w800, height: 1.33, letterSpacing: 0);
+
+  TextStyle get textLRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 20.0, fontWeight: FontWeight.w400, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textLMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 20.0, fontWeight: FontWeight.w500, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textLDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 20.0, fontWeight: FontWeight.w600, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textLExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 20.0, fontWeight: FontWeight.w800, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textMRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 16.0, fontWeight: FontWeight.w400, height: 1.5, letterSpacing: 0);
+
+  TextStyle get textMMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 16.0, fontWeight: FontWeight.w500, height: 1.5, letterSpacing: 0);
+
+  TextStyle get textMDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 16.0, fontWeight: FontWeight.w600, height: 1.5, letterSpacing: 0);
+
+  TextStyle get textMExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 16.0, fontWeight: FontWeight.w800, height: 1.5, letterSpacing: 0);
+
+  TextStyle get textSRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 14.0, fontWeight: FontWeight.w400, height: 1.42, letterSpacing: 0);
+
+  TextStyle get textSMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 14.0, fontWeight: FontWeight.w500, height: 1.42, letterSpacing: 0);
+
+  TextStyle get textSDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 14.0, fontWeight: FontWeight.w600, height: 1.42, letterSpacing: 0);
+
+  TextStyle get textSExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 14.0, fontWeight: FontWeight.w800, height: 1.42, letterSpacing: 0);
+
+  TextStyle get textXSRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 12.0, fontWeight: FontWeight.w400, height: 1.3, letterSpacing: 0);
+
+  TextStyle get textXSMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 12.0, fontWeight: FontWeight.w500, height: 1.3, letterSpacing: 0);
+
+  TextStyle get textXSDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 12.0, fontWeight: FontWeight.w600, height: 1.3, letterSpacing: 0);
+
+  TextStyle get textXSExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 12.0, fontWeight: FontWeight.w800, height: 1.3, letterSpacing: 0);
+
+  TextStyle get textXXSRegular => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 10.0, fontWeight: FontWeight.w400, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textXXSMedium => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 10.0, fontWeight: FontWeight.w500, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textXXSDemiBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 10.0, fontWeight: FontWeight.w600, height: 1.6, letterSpacing: 0);
+
+  TextStyle get textXXSExtraBold => textTheme.labelMedium!.copyWith(fontFamily: 'IRANSansXFaNum', color: text.main, fontSize: 10.0, fontWeight: FontWeight.w800, height: 1.6, letterSpacing: 0);
 }

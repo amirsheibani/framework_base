@@ -1,4 +1,6 @@
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -18,8 +20,13 @@ class CustomRule extends ValidationRuleBase {
       return ValidationResult.valid();
     }
 
-    final ok = fn(value, field);
+    final result = fn(value, field);
 
-    return ok ? ValidationResult.valid() : ValidationResult(message: config?['message'] ?? "${field.label} is invalid", isValid: false);
+    if (result) {
+      return ValidationResult.valid();
+    } else {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.custom)?.message;
+      return ValidationResult(message: message ?? "${field.fieldType} is invalid", isValid: false);
+    }
   }
 }

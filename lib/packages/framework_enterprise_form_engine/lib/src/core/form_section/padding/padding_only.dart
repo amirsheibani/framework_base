@@ -11,11 +11,16 @@ class FormSectionPaddingOnly extends FormSectionPadding{
   FormSectionPaddingOnly({this.paddingTop, this.paddingLeft, this.paddingBottom, this.paddingRight});
 
   factory FormSectionPaddingOnly.fromJson(Map<String, dynamic> json) {
+    double? readNum(dynamic v) => (v is num) ? v.toDouble() : null;
+
     return FormSectionPaddingOnly(
-        paddingTop: json['paddingTop'],
-      paddingLeft: json['paddingLeft'],
-      paddingBottom: json['paddingBottom'],
-      paddingRight: json['paddingRight'],
+      // supports both:
+      // - form_schema.json style: paddingTop/paddingLeft/...
+      // - data.json style: top/left/...
+      paddingTop: readNum(json['paddingTop'] ?? json['top']),
+      paddingLeft: readNum(json['paddingLeft'] ?? json['left']),
+      paddingBottom: readNum(json['paddingBottom'] ?? json['bottom']),
+      paddingRight: readNum(json['paddingRight'] ?? json['right']),
     );
   }
 

@@ -1,9 +1,8 @@
 import 'package:collection/collection.dart';
-
+import 'package:expressions/expressions.dart';
 import '../core/condition.dart';
-import '../core/field_type.dart';
+import '../core/form_field/form_field_model.dart';
 import '../core/form_schema.dart';
-import '../core/form_field.dart';
 import '../core/validation/validation_engine.dart';
 import 'form_field_state.dart';
 import 'form_section_state.dart';
@@ -15,23 +14,33 @@ class FormStateController {
 
   /// internal state storage
   final Map<String, FormFieldState> _fields = {};
-  final Map<String, FormSectionState> _sections  = {};
+  final Map<String, FormSectionState> _sections = {};
 
   /// listeners for UI update (Flutter or any UI framework)
   final List<FormListener> _listeners = [];
 
   FormStateController(this.schema) {
     _initializeFields();
+    // ✅ بعد از initialize، expressions و visibility را محاسبه کن
+    evaluateAllConditionalFields();
+    _evaluateExpressions();
+  }
+
+  void dispose() {
+    for (var field in _fields.values) {
+      field.dispose();  // هر field state رو dispose کن
+    }
+    _listeners.clear();
   }
 
   /// load default values & prepare field states
   void _initializeFields() {
-    for (var section in schema.sections) {
-      _sections[section.title]=FormSectionState(
-      );
-      for (var field in section.fields ?? []) {
-        _fields[field.name] = FormFieldState(
-          value: field.defaultValue,
+    for (var section in schema.allSections) {
+      _sections[section.id] = FormSectionState();
+      final field = section.field;
+      if (field != null) {
+        _fields[field.id] = FormFieldState(
+          value: field.value,
           errors: [],
         );
       }
@@ -84,21 +93,21 @@ class FormStateController {
     }
   }
 
-  bool isFieldVisible(String fieldName) {
+  bool isFieldVisible(String id) {
 
-    final field = schema.allFields.firstWhereOrNull((item) => item.name == fieldName);
+    final field = schema.allFields.firstWhereOrNull((item) => item?.id == id);
     if (field?.visibleWhen == null) return true;
     return field!.visibleWhen!.every(evaluateCondition);
   }
 
-  bool isFieldEnabled(String fieldName) {
-    final field = schema.allFields.firstWhereOrNull((item) => item.name == fieldName);
+  bool isFieldEnabled(String id) {
+    final field = schema.allFields.firstWhereOrNull((item) => item?.id == id);
     if (field?.enabledWhen == null) return true;
     return field!.enabledWhen!.every(evaluateCondition);
   }
 
-  bool isFieldRequired(String fieldName) {
-    final field = schema.allFields.firstWhereOrNull((item) => item.name == fieldName);
+  bool isFieldRequired(String id) {
+    final field = schema.allFields.firstWhereOrNull((item) => item?.id == id);
     if (field?.requiredWhen == null) return false;
     return field!.requiredWhen!.every(evaluateCondition);
   }
@@ -106,25 +115,86 @@ class FormStateController {
   void evaluateAllConditionalFields() {
     bool changed = false;
 
+    // ✅ Sections رو evaluate کن
+    for (final section in schema.allSections) {
+      final sectionState = _sections[section.id];
+      if (sectionState != null && section.visibilityExpression != null) {
+        try {
+          final exp = Expression.parse(section.visibilityExpression!);
+          var evaluator = const ExpressionEvaluator();
+
+          final context = _buildContext();
+
+          final result = evaluator.eval(exp, context);
+
+          // ✅ تبدیل صحیح به bool
+          bool newVisible = true;
+          if (result is bool) {
+            newVisible = result;
+          } else if (result is num) {
+            newVisible = result != 0;
+          } else if (result is String) {
+            newVisible = result.isNotEmpty && result.toLowerCase() != 'false';
+          }
+
+          if (sectionState.visible != newVisible) {
+            sectionState.visible = newVisible;
+            changed = true;
+          }
+        } catch (e) {
+          print('خطا در section visibility: $e');
+          print('Expression: ${section.visibilityExpression}');
+        }
+      }
+    }
+
+    // ✅ Fields رو evaluate کن
     for (final field in schema.allFields) {
-      final name = field.name;
-      final state = _fields[name];
+      final id = field?.id;
+      if (id == null) continue;
+      final state = _fields[id];
       if (state == null) continue;
 
-      final newVisible = isFieldVisible(name);
-      final newEnabled = isFieldEnabled(name);
+      // visibilityExpression
+      if (field?.visibilityExpression != null) {
+        try {
+          final exp = Expression.parse(field!.visibilityExpression!);
+          var evaluator = const ExpressionEvaluator();
+          final context = _buildContext();
+          final result = evaluator.eval(exp, context);
 
-      if (state.visible != newVisible || state.enabled != newEnabled) {
+          // ✅ تبدیل صحیح به bool
+          bool newVisible = true;
+          if (result is bool) {
+            newVisible = result;
+          } else if (result is num) {
+            newVisible = result != 0;
+          } else if (result is String) {
+            newVisible = result.isNotEmpty && result.toLowerCase() != 'false';
+          }
+
+          if (state.visible != newVisible) {
+            state.visible = newVisible;
+            changed = true;
+          }
+        } catch (e) {
+          print('خطا در field visibility (${field!.id}): $e');
+          print('Expression: ${field.visibilityExpression}');
+        }
+      }
+
+      // enabled
+      final newEnabled = isFieldEnabled(id);
+      if (state.enabled != newEnabled) {
+        state.enabled = newEnabled;
         changed = true;
       }
 
-      state.visible = newVisible;
-      state.enabled = newEnabled;
-
-      if (!newVisible) {
-        state.value = null;
-        state.errors = [];
-      }
+      // ❌ اینجا value رو null نکن! فقط مخفی کن
+      // if (!state.visible) {
+      //   state.value = null;
+      //   state.errors = [];
+      // }
     }
 
     if (changed) {
@@ -132,20 +202,54 @@ class FormStateController {
     }
   }
 
+  // ✅ Helper method - بهبود یافته برای پردازش صحیح مقادیر
+  Map<String, dynamic> _buildContext() {
+    final context = <String, dynamic>{};
+    for (var f in schema.allFields) {
+      if (f != null) {
+        final value = getValue(f.id);
 
-  void setValue(String fieldName, dynamic value) {
-    final state = _fields[fieldName];
+        // اگر مقدار null است، از مقدار پیش‌فرض استفاده کن
+        if (value == null) {
+          // برای فیلدهای عددی/ارزی، پیش‌فرض را 0 بگذار تا expression ها نشکنند
+          if (f is AppTextFieldModel && f.currency != null) {
+            context[f.id] = 0;
+          } else {
+            context[f.id] = '';
+          }
+          continue;
+        }
+
+        // اگر مقدار String است
+        if (value is String) {
+          // برای فیلدهای currency، کاما را حذف کن و به عدد تبدیل کن
+          if (f is AppTextFieldModel && f.currency != null) {
+            final cleanValue = value.replaceAll(',', '').trim();
+            context[f.id] = num.tryParse(cleanValue) ?? 0;
+          } else {
+            // سعی کن به عدد تبدیل کنی، اگر نشد همان String را نگه دار
+            final numValue = num.tryParse(value.trim());
+            context[f.id] = numValue ?? value;
+          }
+        } else if (value is num) {
+          context[f.id] = value;
+        } else if (value is bool) {
+          context[f.id] = value;
+        } else {
+          context[f.id] = value;
+        }
+      }
+    }
+    return context;
+  }
+
+  void setValue(String id, dynamic value) {
+    final state = _fields[id];
     if (state == null) return;
 
     state.value = value;
-
-    final field = schema.allFields.firstWhereOrNull((f) => f.name == fieldName);
-    if (field != null) {
-      validateField(field);
-    }
-
     evaluateAllConditionalFields();
-
+    _evaluateExpressions();
     _notifyListeners();
   }
 
@@ -159,24 +263,85 @@ class FormStateController {
   }
 
 
-  List<String> validateField(FormFieldModel field) {
-    final value = getValue(field.name);
+  void _evaluateExpressions() {
+    bool changed = false;
+    int iterations = 0;
+    const maxIterations = 10;
 
-    final state = _fields[field.name];
+    while (iterations < maxIterations) {
+      iterations++;
+      bool madeChange = false;
+
+      for (final field in schema.allFields) {
+        if (field?.expression == null) continue;
+        if (field!.expression!.resultFieldId == field.id) continue;
+
+        final state = _fields[field.id];
+        if (state == null) continue;
+
+        // ✅ اگر field مخفی است، محاسبه نکن
+        if (!state.visible) continue;
+
+        try {
+          final exp = Expression.parse(field.expression!.expression);
+          var evaluator = const ExpressionEvaluator();
+
+          final context = _buildContext();
+          final result = evaluator.eval(exp, context);
+
+          // ✅ تبدیل نتیجه به فرمت مناسب
+          String newValue;
+          if (result is num) {
+            // اگر عدد صحیح است، بدون اعشار نمایش بده
+            if (result == result.toInt()) {
+              newValue = result.toInt().toString();
+            } else {
+              newValue = result.toString();
+            }
+          } else {
+            newValue = result.toString();
+          }
+
+          if (field.expression!.resultFieldId != null) {
+            final resultField = _fields[field.expression!.resultFieldId];
+            if (resultField != null && resultField.value != newValue) {
+              resultField.value = newValue;
+              madeChange = true;
+              changed = true;
+            }
+          }
+        } catch (e) {
+          print('خطا در expression (${field.id}): $e');
+          print('Expression: ${field.expression!.expression}');
+        }
+      }
+
+      if (!madeChange) break;
+    }
+
+    if (changed) {
+      _notifyListeners();
+    }
+  }
+
+
+  List<String> validateField(FormFieldModel field) {
+    final value = getValue(field.id);
+
+    final state = _fields[field.id];
     if (state == null) return [];
 
-    // شرط requiredWhen
-    if (isFieldRequired(field.name)) {
-      if (value == null || value.toString().trim().isEmpty) {
-        state.errors = ["این فیلد اجباری است"];
-        return state.errors;
-      }
+    if (_isRequired(field) && _isEmptyValue(value)) {
+      state.errors = ["این فیلد اجباری است"];
+      _notifyListeners();
+      return state.errors;
     }
 
     // ruleهای ValidationEngine
     final errors = ValidationEngine.validateField(field, value);
 
     state.errors = errors;
+    _notifyListeners();
     return errors;
   }
 
@@ -184,18 +349,28 @@ class FormStateController {
     final result = <String, List<String>>{};
 
     for (final field in schema.allFields) {
-      final value = getValue(field.name);
+      final currentField = field!;
+      final value = getValue(currentField.id);
+      if (_isRequired(currentField) && _isEmptyValue(value)) {
+        const errors = ["این فیلد اجباری است"];
+        _fields[currentField.id]?.errors = errors;
+        result[currentField.id] = errors;
+        continue;
+      }
+
       final errors = ValidationEngine.validateField(field, value);
 
-      _fields[field.name]?.errors = errors;
+      _fields[currentField.id]?.errors = errors;
 
       if (errors.isNotEmpty) {
-        result[field.name] = errors;
+        result[currentField.id] = errors;
       }
     }
     _notifyListeners();
     return result;
   }
+
+
 
   bool get isFormValid {
     for (final field in _fields.values) {
@@ -216,4 +391,22 @@ class FormStateController {
 
   Map<String, FormFieldState> get allFieldStates => _fields;
 
+  bool _isRequired(FormFieldModel field) {
+    final state = _fields[field.id];
+    if (state != null && !state.visible) {
+      return false;
+    }
+    if (field is AppTextFieldModel && field.isRequired == true) {
+      return true;
+    }
+    return isFieldRequired(field.id);
+  }
+
+  bool _isEmptyValue(dynamic value) {
+    return value == null ||
+        (value is String && value.trim().isEmpty) ||
+        (value is List && value.isEmpty);
+  }
+
 }
+

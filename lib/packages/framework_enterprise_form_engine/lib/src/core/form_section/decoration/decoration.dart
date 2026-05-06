@@ -17,8 +17,11 @@ class FormSectionDecoration {
       color: json['color'] != null ? (json['color'] as String).hexToColor : null,
 
       formDecorationBorderRadius: () {
-        if (json['borderRadiusAll'] != null) {
-          return FormDecorationBorderRadiusAll(borderRadius: json['borderRadiusAll']);
+        // Supports multiple JSON shapes:
+        // - form_schema.json style: borderRadiusAll / borderRadiusCircular / borderRadiusOnly
+        // - data.json convenience: borderRadius (alias for borderRadiusAll)
+        if (json['borderRadiusAll'] != null || json['borderRadius'] != null) {
+          return FormDecorationBorderRadiusAll(borderRadius: json['borderRadiusAll'] ?? json['borderRadius']);
         } else if (json['borderRadiusCircular'] != null) {
           return FormDecorationBorderRadiusCircular(borderRadius: json['borderRadiusCircular']);
         } else if (json['borderRadiusOnly'] != null) {

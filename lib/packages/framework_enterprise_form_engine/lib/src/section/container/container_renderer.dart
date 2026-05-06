@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as flutter_widget;
+import 'package:framework_base/framework_base.dart';
 import 'package:framework_base/packages/framework_enterprise_form_engine/lib/src/core/form_section/padding/padding_horizontal.dart';
 import 'package:framework_base/packages/framework_enterprise_form_engine/lib/src/core/form_section/padding/padding_only.dart';
 
@@ -22,6 +23,34 @@ class ContainerSectionRenderer extends SectionRenderer {
     if (!(state.visible)) {
       return const flutter_widget.SizedBox.shrink();
     }
+
+    final hasTitle = section.title.trim().isNotEmpty;
+    final Widget? contentChild = child;
+
+    final Widget? composedChild = (hasTitle || contentChild != null)
+        ? flutter_widget.Column(
+            crossAxisAlignment: flutter_widget.CrossAxisAlignment.start,
+            mainAxisSize: flutter_widget.MainAxisSize.min,
+            children: [
+              if (hasTitle)
+                flutter_widget.Padding(
+                  padding: const flutter_widget.EdgeInsets.only(bottom: 12),
+                  child: AppText(
+                    section.title,
+                    selectedType: TextSelectedType.nonSelectable,
+                    textAlign: flutter_widget.TextAlign.start,
+                    style: section.titleStyle?.getStyle(
+                          context,
+                          section.titleColor?.hexToColor,
+                        ) ??
+                        flutter_widget.Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              if (contentChild != null) contentChild,
+            ],
+          )
+        : null;
+
     return flutter_widget.Container(
       padding: section.padding != null ? () {
         if (section.padding is FormSectionPaddingAll) {
@@ -54,13 +83,13 @@ class ContainerSectionRenderer extends SectionRenderer {
               bottomRight: flutter_widget.Radius.circular((section.decoration?.formDecorationBorderRadius as FormDecorationBorderRadiusOnly).borderRadiusBottomRight ?? 0.0),
             );
           } else if (section.decoration?.formDecorationBorderRadius is FormDecorationBorderRadiusCircular) {
-            flutter_widget.BorderRadius.circular((section.decoration?.formDecorationBorderRadius as FormDecorationBorderRadiusAll).borderRadius ?? 0.0);
+            return flutter_widget.BorderRadius.circular((section.decoration?.formDecorationBorderRadius as FormDecorationBorderRadiusCircular).borderRadius ?? 0.0);
           } else {
             return null;
           }
         }(),
       ),
-      child: child,
+      child: composedChild,
     );
   }
 }

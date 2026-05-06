@@ -15,8 +15,13 @@ class AppButton extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final Widget? text;
+  final bool isIconOnly;
 
-  const AppButton({super.key, required this.type, this.size = AppButtonSize.large, this.onPressed, this.onLongPress, this.suffixIcon, this.prefixIcon, this.text});
+  const AppButton({super.key, required this.type, this.size = AppButtonSize.large, this.onPressed, this.onLongPress, this.suffixIcon, this.prefixIcon, this.text})
+    : isIconOnly = false,
+      assert(!(text == null && (prefixIcon != null || suffixIcon != null)), 'Text cannot be null when prefixIcon or suffixIcon is provided.');
+
+  const AppButton.icon({super.key, required this.type, this.size = AppButtonSize.large, this.onPressed, this.onLongPress, required Widget icon}) : isIconOnly = true, prefixIcon = icon, text = null, suffixIcon = null;
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +176,8 @@ class AppButton extends StatelessWidget {
               // Text / Icon color
               foregroundColor: WidgetStateProperty.resolveWith((states) {
                 final disabled = states.contains(WidgetState.disabled);
-                if (!disabled) return Theme.of(context).text.secondaryForeground;;
+                if (!disabled) return Theme.of(context).text.secondaryForeground;
+                ;
                 return Theme.of(context).text.secondaryForeground.withAlpha(102);
               }),
               // Shape
@@ -208,8 +214,8 @@ class AppButton extends StatelessWidget {
                 }
                 return Theme.of(context).backgroundSurface.main; // Default
               }),
-              // Text / Icon color
 
+              // Text / Icon color
               foregroundColor: WidgetStateProperty.resolveWith((states) {
                 final disabled = states.contains(WidgetState.disabled);
                 if (!disabled) return Theme.of(context).text.subtle;
@@ -265,7 +271,6 @@ class AppButton extends StatelessWidget {
               // Shape
               shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSize.small))),
 
-
               side: WidgetStateProperty.resolveWith((states) {
                 final focused = states.contains(WidgetState.focused);
                 if (!focused) return BorderSide.none;
@@ -309,7 +314,6 @@ class AppButton extends StatelessWidget {
               }),
               // Shape
               shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSize.small))),
-
             ),
             AppButtonType.destructiveOutline => ButtonStyle(
               surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
@@ -411,7 +415,7 @@ class AppButton extends StatelessWidget {
         }(),
         onPressed: onPressed,
         onLongPress: onLongPress,
-        child: _BodyWidget(suffixIcon: suffixIcon, prefixIcon: prefixIcon, text: text, size: size),
+        child: _BodyWidget(suffixIcon: suffixIcon, prefixIcon: prefixIcon, text: text, size: size, isIconOnly: isIconOnly),
       ),
     );
   }
@@ -422,8 +426,9 @@ class _BodyWidget extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? text;
   final AppButtonSize size;
+  final bool isIconOnly;
 
-  const _BodyWidget({super.key, this.suffixIcon, this.prefixIcon, this.text, required this.size});
+  const _BodyWidget({this.suffixIcon, this.prefixIcon, this.text, required this.size, required this.isIconOnly});
 
   @override
   Widget build(BuildContext context) {
@@ -438,23 +443,34 @@ class _BodyWidget extends StatelessWidget {
           };
         }(),
       ),
-      child: SizedBox(
-        height: () {
-          return switch (size) {
-            AppButtonSize.small => 16.0,
-            AppButtonSize.medium => 20.0,
-            AppButtonSize.large => 24.0,
-          };
-        }(),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (prefixIcon != null) ...[prefixIcon!, AppSize.xsmall.gapWidth],
-            if (text != null) text!,
-            if (suffixIcon != null) ...[AppSize.xsmall.gapWidth, suffixIcon!],
-          ],
-        ),
-      ),
+      child: isIconOnly
+          ? SizedBox.square(
+              dimension: () {
+                return switch (size) {
+                  AppButtonSize.small => 16.0,
+                  AppButtonSize.medium => 20.0,
+                  AppButtonSize.large => 24.0,
+                };
+              }(),
+              child: Center(child: prefixIcon),
+            )
+          : SizedBox(
+              height: () {
+                return switch (size) {
+                  AppButtonSize.small => 16.0,
+                  AppButtonSize.medium => 20.0,
+                  AppButtonSize.large => 24.0,
+                };
+              }(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (prefixIcon != null) ...[prefixIcon!, AppSize.xsmall.gapWidth],
+                  if (text != null) text!,
+                  if (suffixIcon != null) ...[AppSize.xsmall.gapWidth, suffixIcon!],
+                ],
+              ),
+            ),
     );
   }
 }

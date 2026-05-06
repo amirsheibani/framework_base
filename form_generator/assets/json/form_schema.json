@@ -21,8 +21,9 @@
         {
           "name": "fullName",
           "label": "نام و نام خانوادگی",
-          "type": "text",
-          "placeholder": "مثلاً علی رضایی",
+          "type": "appTextFormField",
+          "hint": "مثلاً علی رضایی",
+
           "validationRules": [
             {
               "type": "required"

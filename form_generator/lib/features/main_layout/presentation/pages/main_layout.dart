@@ -1,17 +1,11 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:form_generator/features/main_layout/presentation/widgets/demo_app_alert.dart';
-import 'package:form_generator/features/main_layout/presentation/widgets/demo_app_button.dart';
-import 'package:form_generator/features/main_layout/presentation/widgets/demo_app_radio.dart';
 import 'package:framework_base/framework_base.dart';
-import 'package:hugeicons/hugeicons.dart';
 
-import '../widgets/demo_app_avatar.dart';
-import '../widgets/demo_app_switch.dart';
-import '../widgets/demo_app_text_form_field.dart';
 
 class MainLayout extends ConsumerStatefulWidget {
   const MainLayout({super.key});
@@ -22,7 +16,7 @@ class MainLayout extends ConsumerStatefulWidget {
 
 class _MainLayoutState extends ConsumerState<MainLayout> {
   late FormSchema schema;
-  late FormStateController controller;
+  FormStateController? controller;
 
   int _index = -1;
 
@@ -35,46 +29,78 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
   }
 
   @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              color: Theme.of(context).backgroundSurface.main,
-                padding: EdgeInsets.symmetric(horizontal: AppSize.small),
-                child: DemoAppButton(),
+
+            FutureBuilder(
+              future: rootBundle.loadString('assets/json/data.json'),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  schema = FormSchema.fromJson(json.decode(snapshot.data!));
+                  controller ??= FormStateController(schema);
+                  return DynamicFormBuilder(schema: schema, controller: controller!);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
-            AppSize.small.gapHeight,
-            Container(
-              color: Theme.of(context).backgroundSurface.main,
-              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
-                child: DemoAppTextFormField(),
-            ),
-            AppSize.small.gapHeight,
-            Container(
-              color: Theme.of(context).backgroundSurface.main,
-              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
-              child: DemoAppAlert(),
-            ),
-            AppSize.small.gapHeight,
-            Container(
-              color: Theme.of(context).backgroundSurface.main,
-              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
-              child: DemoAppAvatar(),
-            ),
-            AppSize.small.gapHeight,
-            Container(
-              color: Theme.of(context).backgroundSurface.main,
-              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
-              child: DemoAppRadio(),
-            ),
-            AppSize.small.gapHeight,
-            Container(
-              color: Theme.of(context).backgroundSurface.main,
-              padding: EdgeInsets.symmetric(horizontal: AppSize.small),
-              child: DemoAppSwitch(),
-            ),
+            // AppButton(type: AppButtonType.primaryOutline, onPressed: (){
+            //   controller?.validateAll();
+            // }, text: AppText("Button",selectedType: TextSelectedType.nonSelectable,)),
+            // AppTextFormField(
+            //   label: "تست",
+            //
+            //   type: AppTextFormFieldType.text,
+            //   onChanged: (value){
+            //     print("Value changed: $value");
+            //   },
+            // ),
+            //
+            // AppText("Button",selectedType: TextSelectedType.nonSelectable,)
+            // Container(
+            //   color: Theme.of(context).backgroundSurface.main,
+            //     padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+            //     child: DemoAppButton(),
+            // ),
+            // AppSize.small.gapHeight,
+            // Container(
+            //   color: Theme.of(context).backgroundSurface.main,
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+            //     child: DemoAppTextFormField(),
+            // ),
+            // AppSize.small.gapHeight,
+            // Container(
+            //   color: Theme.of(context).backgroundSurface.main,
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+            //   child: DemoAppAlert(),
+            // ),
+            // AppSize.small.gapHeight,
+            // Container(
+            //   color: Theme.of(context).backgroundSurface.main,
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+            //   child: DemoAppAvatar(),
+            // ),
+            // AppSize.small.gapHeight,
+            // Container(
+            //   color: Theme.of(context).backgroundSurface.main,
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+            //   child: DemoAppRadio(),
+            // ),
+            // AppSize.small.gapHeight,
+            // Container(
+            //   color: Theme.of(context).backgroundSurface.main,
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.small),
+            //   child: DemoAppSwitch(),
+            // ),
           ],
         ),
       )

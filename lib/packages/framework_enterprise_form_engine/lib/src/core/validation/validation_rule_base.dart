@@ -1,4 +1,4 @@
-import '../form_field.dart';
+import '../form_field/form_field_model.dart';
 import '../validation_result.dart';
 import 'rule_type.dart';
 

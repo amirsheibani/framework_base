@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:framework_base/framework_base.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -59,11 +58,12 @@ class AppTextFormField extends StatefulWidget {
     this.autoFontResize = false,
     this.maxLength,
     this.showCharacterCount = false,
+    this.value, this.error,
   });
 
   final AppTextFormFieldType type;
   final AppTextFormFieldSize size;
-  final AppTextFormFieldCurrency currency;
+  final AppTextFormFieldCurrency? currency;
   final String? label;
   final String? hint;
   final String? helperText;
@@ -89,6 +89,8 @@ class AppTextFormField extends StatefulWidget {
   final bool autoFontResize;
   final int? maxLength;
   final bool? showCharacterCount;
+  final String? value;
+  final String? error;
 
   @override
   State<AppTextFormField> createState() => _AppTextFormFieldState();
@@ -116,7 +118,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
     if (widget.controller != null) {
       _controller = widget.controller!;
     } else {
-      _controller = TextEditingController();
+      _controller = TextEditingController(text: widget.value);
       _isInternalController = true;
     }
 
@@ -136,15 +138,67 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
     _controller.addListener(_handleAutoResize);
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
 
+  @override
+  void didUpdateWidget(AppTextFormField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != null && widget.controller != oldWidget.controller) {
+      // اگر کنترلر خارجی تغییر کرده است
+      _controller.text = widget.controller!.text;
+
+      // اگر نیاز دارید عملیات خاصی انجام دهید، اینجا انجام دهید
+      _handleAutoResize();
+
+      // در صورت نیاز، وضعیت‌های دیگر را بروزرسانی کنید
+    } else if (widget.controller != null && widget.controller!.text != _controller.text) {
+      // اگر مقدار کنترلر خارجی تغییر می‌کند و خودش هم متفاوت است، هم‌نوا کنید
+      _controller.text = widget.controller!.text;
+    }
+
+    _applyFormatters();
+    // if(oldWidget.controller != widget.controller){
+    //   if(widget.controller != null){
+    //     _controller.text = widget.controller?.text ?? '';
+    //   }
+    // }
+    if(widget.error != null){
+      hasError = true;
+      errorMessage = widget.error;
+    }else{
+      hasError = false;
+    }
     dynamicFontStyle = _baseFontSize();
+
   }
+
+
+  void _applyFormatters() {
+    TextEditingValue value = _controller.value;
+
+    final formatters = <TextInputFormatter>[
+      if (widget.type == AppTextFormFieldType.cardNumber) CardNumberInputFormatter(),
+      if (widget.type == AppTextFormFieldType.currency)
+        CurrencyInputFormatter(isRial: widget.currency == AppTextFormFieldCurrency.rial),
+      if (widget.type == AppTextFormFieldType.phone) PhoneInputFormatter(),
+      if (widget.type == AppTextFormFieldType.iban) IBANInputFormatter(),
+      if (widget.type == AppTextFormFieldType.date) DateInputFormatter(),
+    ];
+
+    for (final formatter in formatters) {
+      value = formatter.formatEditUpdate(_controller.value, value);
+    }
+
+    _controller.value = value.copyWith(
+      selection: TextSelection.collapsed(offset: value.text.length),
+      composing: TextRange.empty,
+    );
+  }
+
+
 
   @override
   void dispose() {
+    textStream?.close();
     _focusNode.dispose();
 
     _controller.removeListener(_handleAutoResize);
@@ -172,7 +226,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
     double base = _baseFontSize().fontSize!;
 
     // الگوریتم ساده و روان
-    double newSize = base - (text.length * 0.3);
+    double factor = (text.length / 20).clamp(0, 1);
+    double newSize = base - (factor * 4);
 
     if (newSize < minFontSize) {
       newSize = minFontSize;
@@ -316,6 +371,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
                     if (widget.type == AppTextFormFieldType.date) DateInputFormatter(),
                   ],
+                  // textAlign: widget.type == AppTextFormFieldType.currency ? TextAlign.end : TextAlign.start,
+                  textDirection: widget.type == AppTextFormFieldType.currency ? TextDirection.ltr : TextDirection.rtl ,
                   style: widget.autoFontResize ? dynamicFontStyle : _baseFontSize(),
                   onTap: widget.onTap,
                   onSaved: widget.onSaved,
@@ -501,7 +558,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                                       children: [
                                         AppSize.nano.gapWidth,
                                         Text(
-                                          widget.currency.value,
+                                          widget.currency!.value ,
                                           style: () {
                                             return switch (widget.size) {
                                               AppTextFormFieldSize.small => Theme.of(context).textXSRegular,
@@ -704,7 +761,6 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                   },
                 ),
               ),
-
             ],
           ),
         ),

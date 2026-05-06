@@ -59,6 +59,9 @@ class CurrencyInputFormatter extends TextInputFormatter {
       formattedText = "$formattedInteger.$decimalPart";
     }
 
+    if (isRial) {
+      formattedText = _toPersianDigits(formattedText);
+    }
     // ✅ محاسبه صحیح موقعیت کرسر
     int baseOffset = newValue.selection.baseOffset;
     int diff = formattedText.length - newValue.text.length;
@@ -68,9 +71,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     if (newOffset > formattedText.length) {
       newOffset = formattedText.length;
     }
-    if (isRial) {
-      formattedText = _toPersianDigits(formattedText);
-    }
+
 
     return TextEditingValue(
       text: formattedText,
@@ -93,25 +94,26 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
     return buffer.toString().split('').reversed.join();
   }
-}
-String _toEnglishDigits(String input) {
-  const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-  const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  String _toEnglishDigits(String input) {
+    const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 
-  for (int i = 0; i < 10; i++) {
-    input = input.replaceAll(persian[i], '$i');
-    input = input.replaceAll(arabic[i], '$i');
+    for (int i = 0; i < 10; i++) {
+      input = input.replaceAll(persian[i], '$i');
+      input = input.replaceAll(arabic[i], '$i');
+    }
+
+    return input;
   }
+  String _toPersianDigits(String input) {
+    const english = ['0','1','2','3','4','5','6','7','8','9'];
+    const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
-  return input;
-}
-String _toPersianDigits(String input) {
-  const english = ['0','1','2','3','4','5','6','7','8','9'];
-  const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    for (int i = 0; i < 10; i++) {
+      input = input.replaceAll(english[i], persian[i]);
+    }
 
-  for (int i = 0; i < 10; i++) {
-    input = input.replaceAll(english[i], persian[i]);
+    return input;
   }
-
-  return input;
 }
+

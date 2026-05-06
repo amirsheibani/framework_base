@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:framework_base/packages/framework_core/lib/src/widgets/ui_kit/text/text_formater/card_number_formatter.dart';
+import 'package:framework_base/packages/framework_core/lib/src/widgets/ui_kit/text/text_formater/currency_formatter.dart';
+import 'package:framework_base/packages/framework_core/lib/src/widgets/ui_kit/text/text_formater/date_formatter.dart';
+import 'package:framework_base/packages/framework_core/lib/src/widgets/ui_kit/text/text_formater/iban_formatter.dart';
+import 'package:framework_base/packages/framework_core/lib/src/widgets/ui_kit/text/text_formater/phone_formatter.dart';
 
-enum TextType { selectable, nonSelectable }
+enum TextSelectedType { selectable, nonSelectable }
+
+enum AppTextType { text, password, email, phone, address, date, currency, iban, cardNumber, textMultiline, dropdown }
 
 typedef SelectionChangedCallback = void Function(TextSelection selection, SelectionChangedCause? cause);
 
 class AppText extends StatelessWidget {
-  final TextType type;
+  final TextSelectedType selectedType;
+  final AppTextType appTextType;
   final String data;
   final TextStyle? style;
   final StrutStyle? strutStyle;
@@ -25,7 +33,8 @@ class AppText extends StatelessWidget {
   const AppText(
     this.data, {
     super.key,
-    this.type = TextType.selectable,
+    this.selectedType = TextSelectedType.selectable,
+    this.appTextType = AppTextType.text,
     this.style,
     this.strutStyle,
     this.textAlign,
@@ -43,9 +52,23 @@ class AppText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return type == TextType.nonSelectable
+    return selectedType == TextSelectedType.nonSelectable
         ? Text(
-            data,
+            () {
+              return switch (appTextType) {
+                AppTextType.text => data,
+                AppTextType.password => data,
+                AppTextType.email => data,
+                AppTextType.phone => data.formatPhone,
+                AppTextType.address => data,
+                AppTextType.date => data.formatDate,
+                AppTextType.currency => data.formatCurrency,
+                AppTextType.iban => data.formatIBAN,
+                AppTextType.cardNumber => data.formatCardNumber,
+                AppTextType.textMultiline => data,
+                AppTextType.dropdown => data,
+              };
+            }(),
             style: style,
             strutStyle: strutStyle,
             textAlign: textAlign,
@@ -60,7 +83,21 @@ class AppText extends StatelessWidget {
             textWidthBasis: textWidthBasis,
           )
         : SelectableText(
-            data,
+            () {
+              return switch (appTextType) {
+                AppTextType.text => data,
+                AppTextType.password => data,
+                AppTextType.email => data,
+                AppTextType.phone => data.formatPhone,
+                AppTextType.address => data,
+                AppTextType.date => data.formatDate,
+                AppTextType.currency => data.formatCurrency,
+                AppTextType.iban => data.formatIBAN,
+                AppTextType.cardNumber => data.formatCardNumber,
+                AppTextType.textMultiline => data,
+                AppTextType.dropdown => data,
+              };
+            }(),
             style: style,
             strutStyle: strutStyle,
             textAlign: textAlign,

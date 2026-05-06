@@ -1,0 +1,428 @@
+{
+  "id": "123456",
+  "version": 1,
+  "title": "فرم ثبت نام کاربر جدید",
+  "sections_padding_only": {
+    "top": 16.0,
+    "left": 16.0,
+    "right": 16.0,
+    "bottom": 16.0
+  },
+  "child": {
+    "id": "root",
+    "type": "column",
+    "mainAxisAlignment": "start",
+    "mainAxisSize": "max",
+    "scroll": true,
+    "children": [
+      {
+        "id": "personal_info",
+        "title": "اطلاعات شخصی",
+        "titleStyle": "textXLMedium",
+        "titleColor": "#111111",
+        "type": "container",
+        "margin_only": {
+          "top": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "bottom": 0.0
+        },
+        "padding_only": {
+          "top": 16.0,
+          "left": 16.0,
+          "right": 16.0,
+          "bottom": 16.0
+        },
+        "decoration": {
+          "color": "#F0F0F0",
+          "borderRadius": 16.0
+        },
+        "child": {
+          "id": "personal_info_content",
+          "type": "column",
+          "mainAxisAlignment": "start",
+          "mainAxisSize": "min",
+          "children": [
+            {
+              "id": "fullName",
+              "fieldType": "appTextFormField",
+              "type": "text",
+              "size": "small",
+              "currency": "rial",
+              "label": "نام خانوادگی",
+              "value": "امیر شیبانی",
+              "hint": "مثلا علی رضایی",
+              "helperText": "لطفا نام خانوادگی خود را وارد کنید",
+              "isRequired": true,
+              "enabled": true,
+              "readOnly": false,
+              "enableSuggestions": false,
+              "autocorrect": false,
+              "validationRules": [
+                {
+                  "type": "required",
+                  "message": "وارد کردن نام الزامی است"
+                },
+                {
+                  "type": "minLength",
+                  "config": {
+                    "minLength": 3
+                  },
+                  "message": "نام باید حداقل 3 کاراکتر باشد"
+                }
+              ]
+            },
+            {
+              "id": "personal_amounts_row",
+              "type": "row",
+              "mainAxisAlignment": "start",
+              "mainAxisSize": "max",
+              "scroll": false,
+              "children": [
+                {
+                  "id": "personal_amount_one_expanded",
+                  "type": "expanded",
+                  "flex": 1,
+                  "child": {
+                    "id": "amountOne",
+                    "fieldType": "appTextFormField",
+                    "type": "currency",
+                    "size": "large",
+                    "currency": "dollar",
+                    "label": "مبلغ دلاری",
+                    "hint": "مثلا 1111",
+                    "helperText": "نرخ تبدیل دلار به ریال 1800000 است",
+                    "isRequired": true,
+                    "enabled": true,
+                    "readOnly": false,
+                    "enableSuggestions": false,
+                    "autocorrect": false,
+                    "validationRules": [
+                      {
+                        "type": "required",
+                        "message": "وارد کردن مبلغ الزامی است"
+                      },
+                      {
+                        "type": "minLength",
+                        "config": {
+                          "minLength": 3
+                        },
+                        "message": "مبلغ باید حداقل 3 کاراکتر باشد"
+                      }
+                    ],
+                    "expression": {
+                      "exp": "amountOne * 1800000",
+                      "resultFieldId": "amountTwo"
+                    }
+                  }
+                },
+                {
+                  "id": "personal_amount_two_expanded",
+                  "type": "expanded",
+                  "flex": 1,
+                  "child": {
+                    "id": "amountTwo",
+                    "fieldType": "appTextFormField",
+                    "type": "currency",
+                    "size": "medium",
+                    "currency": "rial",
+                    "label": "مبلغ ریالی",
+                    "hint": "مثلا 1111",
+                    "helperText": "لطفا مبلغ مورد نیاز خود را وارد کنید",
+                    "isRequired": false,
+                    "enabled": true,
+                    "readOnly": true,
+                    "enableSuggestions": false,
+                    "autocorrect": false,
+                    "visibilityExpression": "amountOne > 1",
+                    "expression": {
+                      "exp": "amountTwo * 2",
+                      "resultFieldId": "result"
+                    },
+                    "validationRules": [
+                      {
+                        "type": "required",
+                        "message": "وارد کردن مبلغ الزامی است"
+                      },
+                      {
+                        "type": "minLength",
+                        "config": {
+                          "minLength": 3
+                        },
+                        "message": "مبلغ باید حداقل 3 کاراکتر باشد"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "result",
+              "fieldType": "appText",
+              "value": "",
+              "visibilityExpression": "amountOne > 1",
+              "selectedType": "selectable",
+              "appTextType": "currency",
+              "style": "textSRegular",
+              "color": "#FF8844",
+              "textAlign": "center",
+              "textDirection": "rtl",
+              "locale": "fa",
+              "softWrap": true,
+              "overflow": "ellipsis",
+              "maxLines": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "personal_info_2",
+        "title": "نمونه Flexible و Spacer",
+        "titleStyle": "textXLMedium",
+        "titleColor": "#111111",
+        "type": "container",
+        "margin_only": {
+          "top": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "bottom": 0.0
+        },
+        "padding_only": {
+          "top": 16.0,
+          "left": 16.0,
+          "right": 16.0,
+          "bottom": 16.0
+        },
+        "decoration": {
+          "color": "#F0F0F0",
+          "borderRadius": 32.0
+        },
+        "child": {
+          "id": "personal_info_2_content",
+          "type": "column",
+          "mainAxisAlignment": "start",
+          "mainAxisSize": "max",
+          "children": [
+            {
+              "id": "personal_info_2_amounts_row",
+              "type": "row",
+              "mainAxisAlignment": "start",
+              "mainAxisSize": "max",
+              "children": [
+                {
+                  "id": "amount_one_2_flexible",
+                  "type": "flexible",
+                  "flex": 2,
+                  "fit": "tight",
+                  "child": {
+                    "id": "amountOne2",
+                    "fieldType": "appTextFormField",
+                    "type": "currency",
+                    "size": "large",
+                    "currency": "dollar",
+                    "label": "مبلغ ورودی",
+                    "hint": "مثلا 1111",
+                    "helperText": "نرخ تبدیل دلار به ریال 1800000 است",
+                    "isRequired": true,
+                    "enabled": true,
+                    "readOnly": false,
+                    "enableSuggestions": false,
+                    "autocorrect": false,
+                    "validationRules": [
+                      {
+                        "type": "required",
+                        "message": "وارد کردن مبلغ الزامی است"
+                      }
+                    ],
+                    "expression": {
+                      "exp": "amountOne2 * 1800000",
+                      "resultFieldId": "amountTwo2"
+                    }
+                  }
+                },
+                {
+                  "id": "amounts_spacer",
+                  "type": "spacer",
+                  "flex": 1
+                },
+                {
+                  "id": "amount_two_2_flexible",
+                  "type": "flexible",
+                  "flex": 2,
+                  "fit": "tight",
+                  "child": {
+                    "id": "amountTwo2",
+                    "fieldType": "appTextFormField",
+                    "type": "currency",
+                    "size": "medium",
+                    "currency": "rial",
+                    "label": "خروجی ریالی",
+                    "hint": "مثلا 1111",
+                    "helperText": "این فیلد از expression پر می شود",
+                    "isRequired": false,
+                    "enabled": true,
+                    "readOnly": true,
+                    "enableSuggestions": false,
+                    "autocorrect": false,
+                    "visibilityExpression": "amountOne2 > 1",
+                    "expression": {
+                      "exp": "amountTwo2 * 2",
+                      "resultFieldId": "result2"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "result_2_field",
+              "type": "field",
+              "field": {
+                "id": "result2",
+                "fieldType": "appText",
+                "value": "",
+                "visibilityExpression": "amountOne2 > 1",
+                "selectedType": "selectable",
+                "appTextType": "currency",
+                "style": "textSRegular",
+                "color": "#FF8844",
+                "textAlign": "center",
+                "textDirection": "rtl",
+                "locale": "fa",
+                "softWrap": true,
+                "overflow": "ellipsis",
+                "maxLines": 2
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "gap_1",
+        "type": "gap",
+        "height": 24.0,
+        "width": 24.0
+      },
+      {
+        "id": "personal_info_2",
+        "title": "نمونه Flexible و Spacer",
+        "titleStyle": "textXLMedium",
+        "titleColor": "#111111",
+        "type": "container",
+        "margin_only": {
+          "top": 0.0,
+          "left": 0.0,
+          "right": 0.0,
+          "bottom": 0.0
+        },
+        "padding_only": {
+          "top": 16.0,
+          "left": 16.0,
+          "right": 16.0,
+          "bottom": 16.0
+        },
+        "decoration": {
+          "color": "#F0F0F0",
+          "borderRadius": 32.0
+        },
+        "child": {
+          "id": "personal_info_2_content",
+          "type": "column",
+          "mainAxisAlignment": "start",
+          "mainAxisSize": "max",
+          "children": [
+            {
+              "id": "personal_info_2_amounts_row",
+              "type": "row",
+              "mainAxisAlignment": "start",
+              "mainAxisSize": "max",
+              "children": [
+                {
+                  "id": "amount_one_2_flexible",
+                  "type": "flexible",
+                  "flex": 2,
+                  "fit": "tight",
+                  "child": {
+                    "id": "amountOne2",
+                    "fieldType": "appTextFormField",
+                    "type": "currency",
+                    "size": "large",
+                    "currency": "dollar",
+                    "label": "مبلغ ورودی",
+                    "hint": "مثلا 1111",
+                    "helperText": "نرخ تبدیل دلار به ریال 1800000 است",
+                    "isRequired": true,
+                    "enabled": true,
+                    "readOnly": false,
+                    "enableSuggestions": false,
+                    "autocorrect": false,
+                    "validationRules": [
+                      {
+                        "type": "required",
+                        "message": "وارد کردن مبلغ الزامی است"
+                      }
+                    ],
+                    "expression": {
+                      "exp": "amountOne2 * 1800000",
+                      "resultFieldId": "amountTwo2"
+                    }
+                  }
+                },
+                {
+                  "id": "amounts_spacer",
+                  "type": "spacer",
+                  "flex": 1
+                },
+                {
+                  "id": "amount_two_2_flexible",
+                  "type": "flexible",
+                  "flex": 2,
+                  "fit": "tight",
+                  "child": {
+                    "id": "amountTwo2",
+                    "fieldType": "appTextFormField",
+                    "type": "currency",
+                    "size": "medium",
+                    "currency": "rial",
+                    "label": "خروجی ریالی",
+                    "hint": "مثلا 1111",
+                    "helperText": "این فیلد از expression پر می شود",
+                    "isRequired": false,
+                    "enabled": true,
+                    "readOnly": true,
+                    "enableSuggestions": false,
+                    "autocorrect": false,
+                    "visibilityExpression": "amountOne2 > 1",
+                    "expression": {
+                      "exp": "amountTwo2 * 2",
+                      "resultFieldId": "result2"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "result_2_field",
+              "type": "field",
+              "field": {
+                "id": "result2",
+                "fieldType": "appText",
+                "value": "",
+                "visibilityExpression": "amountOne2 > 1",
+                "selectedType": "selectable",
+                "appTextType": "currency",
+                "style": "textSRegular",
+                "color": "#FF8844",
+                "textAlign": "center",
+                "textDirection": "rtl",
+                "locale": "fa",
+                "softWrap": true,
+                "overflow": "ellipsis",
+                "maxLines": 2
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

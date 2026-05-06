@@ -51,7 +51,7 @@ class _AppRadioLabelState extends State<AppRadioLabel> {
               ],
             if(widget.onTapLabel != null) ...[
               AppSize.xsmall.gapHeight,
-              InkWell(onTap: widget.onTap, child: AppText(type: TextType.nonSelectable,widget.onTapLabel!, style: Theme.of(context).textMRegular.copyWith(color: Theme.of(context).text.subtle))),
+              InkWell(onTap: widget.onTap, child: AppText(selectedType: TextSelectedType.nonSelectable,widget.onTapLabel!, style: Theme.of(context).textMRegular.copyWith(color: Theme.of(context).text.subtle))),
               AppSize.xsmall.gapHeight,
             ]
           ],

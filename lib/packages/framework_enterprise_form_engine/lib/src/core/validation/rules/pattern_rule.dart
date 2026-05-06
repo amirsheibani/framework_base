@@ -1,6 +1,8 @@
 
 
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -21,8 +23,10 @@ class PatternRule extends ValidationRuleBase {
 
     final regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.pattern)?.message;
+
       return ValidationResult(
-          message: config?['message'] ?? "${field.label} format is invalid", isValid: false);
+          message: message ?? "${field.id} format is invalid", isValid: false);
     }
 
     return ValidationResult.valid();

@@ -1,9 +1,9 @@
-import '../form_field.dart';
+import '../form_field/form_field_model.dart';
 import 'validation_registry.dart';
 
 class ValidationEngine {
   static List<String> validateField(FormFieldModel field, dynamic value) {
-    final rules = field.validationRules;
+    final rules = field.validator;
     if (rules == null || rules.isEmpty) return [];
 
     final errors = <String>[];

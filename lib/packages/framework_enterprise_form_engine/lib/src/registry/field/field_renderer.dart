@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart' as flutter;
 
 
-import '../../core/form_field.dart';
+import '../../core/form_field/form_field_model.dart';
 import '../../state/form_state_controller.dart';
 import '../../state/form_field_state.dart';
 

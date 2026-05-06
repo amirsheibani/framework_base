@@ -1,6 +1,8 @@
 
 
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -17,9 +19,11 @@ class MinValueRule extends ValidationRuleBase {
 
     final min = config?[RuleFieldType.minValue.toString()] ?? 0;
 
+
     if (value < min) {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.minValue)?.message;
       return ValidationResult(
-          message: "${field.label} must be >= $min",isValid: false);
+          message: message ?? "${field.id} must be >= $min",isValid: false);
     }
 
     return ValidationResult.valid();

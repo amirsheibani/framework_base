@@ -1,5 +1,7 @@
 
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -17,8 +19,10 @@ class PhoneRule extends ValidationRuleBase {
     final regex = RegExp(r'^[0-9]{10,15}$');
 
     if (!regex.hasMatch(value)) {
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.phone)?.message;
+
       return ValidationResult(
-          message: config?['message'] ?? "${field.label} is not a valid phone",isValid: false);
+          message: message ?? "${field.id} is not a valid phone",isValid: false);
     }
 
     return ValidationResult.valid();

@@ -1,4 +1,6 @@
-import '../../form_field.dart';
+import 'package:collection/collection.dart';
+
+import '../../form_field/form_field_model.dart';
 import '../../validation_result.dart';
 import '../rule_type.dart';
 import '../validation_rule_base.dart';
@@ -16,8 +18,11 @@ class RequiredRule extends ValidationRuleBase {
             (value is String && value.trim().isEmpty) ||
             (value is List && value.isEmpty);
 
-    return isEmpty
-        ? ValidationResult( message: config?['message'] ?? "${field.label} is required", isValid: false)
-        : ValidationResult.valid();
+    if(isEmpty){
+      final message = field.validator?.firstWhereOrNull((item) => item.type == RuleFieldType.required)?.message;
+      return ValidationResult( message: message ?? "${field.id} is required", isValid: false);
+    }else{
+      return ValidationResult.valid();
+    }
   }
 }
